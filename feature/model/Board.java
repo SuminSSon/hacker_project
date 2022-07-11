@@ -10,16 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="board")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-
 @Entity
 @Table(name="board" )
 @Data
@@ -36,16 +26,13 @@ public class Board {
 
     @Column(name = "board_type")
     @Enumerated(EnumType.STRING)
-    private BoardType board_type; // 게시판 유형 (enum)
+    private Integer board_type; // 게시판 유형
 
     @Column(name = "board_title")
     private String board_title; // 글 제목
 
     @Column(name = "board_content")
     private String board_content; // 글 제목
-
-    @Column(name = "board_writer")
-    private Integer board_writer; // 작성자 번호
 
     @Column(name = "board_date")
     @CreationTimestamp

@@ -10,17 +10,6 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="comments")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-//@IdClass(CommentsId.class)
-
 @Entity
 @Table(name="comments" )
 @Data
@@ -40,9 +29,6 @@ public class Comments {
     @ManyToOne
     @JoinColumn(name = "board_number", referencedColumnName = "board_number")
     private Board board_number; // 게시판 글 번호 FK, PK
-
-    @Column(name = "comments_writer")
-    private Integer comments_writer; // 작성자 번호
 
     @Column(name = "comments_date")
     @CreationTimestamp

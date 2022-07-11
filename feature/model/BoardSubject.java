@@ -7,17 +7,6 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Objects;
 
-//@Entity
-//@Table(name="board_subject")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-//@IdClass(BoardSubjectId.class)
-
 @Entity
 @Table(name="board_subject" )
 @Data

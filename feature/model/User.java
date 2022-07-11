@@ -8,16 +8,6 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="user")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-
 @Entity
 @Table(name="user" )
 @Data

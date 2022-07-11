@@ -7,17 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Objects;
 
-//@Entity
-//@Table(name="chat_content")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-//@IdClass(ChatContentId.class)
-
 @Entity
 @Table(name="chat_content" )
 @Data
@@ -40,9 +29,6 @@ public class ChatContent {
 
     @Column(name = "chat_content")
     private String chat_content; // 채팅 내용
-
-    @Column(name = "chat_sender")
-    private String chat_sender; // 보낸 사람
 
     @ManyToOne
     @JoinColumn(name = "chat_number", referencedColumnName = "chat_number")

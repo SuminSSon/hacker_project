@@ -9,17 +9,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-//@Entity
-//@Table(name="member")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-//@IdClass(MemberId.class)
-
 @Entity
 @Table(name="member" )
 @Data

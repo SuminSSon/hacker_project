@@ -7,16 +7,6 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
-//@Entity
-//@Table(name="chat")
-//@NoArgsConstructor
-//@Getter
-//@Setter
-//@RequiredArgsConstructor
-//@Builder
-//@AllArgsConstructor
-//@ToString(callSuper = true)
-
 @Entity
 @Table(name="chat" )
 @Data
