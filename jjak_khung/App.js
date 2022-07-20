@@ -3,8 +3,16 @@ import { StyleSheet, View } from 'react-native';
 import Signin from './src/signin/signin';
 
 const App = () => {
+  const [userId, setUserId] = useState({id: ''});
+  const [userPassword, setUserPassword] = useState({password: ''});
+
+  function UserSignin (_id, _password) {
+    setUserId({id: _id});
+    setUserPassword({password: _password});
+  }
+
   return (
-    <Signin/>
+    <Signin UserSignin={UserSignin}/>
   );
 };
 
