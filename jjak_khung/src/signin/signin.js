@@ -4,6 +4,15 @@ import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'rea
 function Signin (props) {
     let id = '';
     let pw = '';
+    let fontColor = '#AA3333';
+
+    function SetId (_id) {(
+        id = _id
+    )};
+
+    function SetPw (_pw) {(
+        pw = _pw
+    )};
 
     function IdInput () {
         return (
@@ -14,6 +23,7 @@ function Signin (props) {
                 maxLength={16}
                 autoCapitalize={'none'}
                 editable={true}
+                onChangeText={(text) => SetId(text)}
             />
         );
     };
@@ -27,13 +37,13 @@ function Signin (props) {
                 maxLength={16}
                 autoCapitalize={'none'}
                 editable={true}
+                onChangeText={(text) => SetPw(text)}
+                secureTextEntry={true}
             />
         );
     };
 
     function SigninFailText () {
-        let fontColor = 'red';
-    
         return(
             <View style={{width: 300, padding: 10}}>
                 <Text style={{color: fontColor}}>아이디 또는 비밀번호가 일치하지 않습니다.</Text>
@@ -68,10 +78,11 @@ function Signin (props) {
     return (
         <View style={styles.signinWrap}>
             <SigninBox/>
-            
             <Button
                 title="회원가입"
             />
+            <Text>{id}</Text>
+            <Text>{pw}</Text>
         </View>
     );
 };

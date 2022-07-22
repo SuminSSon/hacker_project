@@ -1,0 +1,27 @@
+{
+    "chatrooms" : [
+        {
+            "chat_number" : 1,
+            "chat_max" : 8,
+            "chat_mentee" : 3,"mentor_check" : true,
+            "last_check_time" : "2022-07-01T01:40:50.123123",
+            "subject_number" : {
+                "subject_number" : 1,
+                "subject_name" : "객체지향프로그래밍",
+                "subject_professor" : "이대호"
+            }
+        },
+        {
+            "chat_number" : 2,
+            "chat_max" : 8,
+            "chat_mentee" : 3,
+            "mentor_check" : false,
+            "last_check_time" : "2022-07-01T01:40:50.123123",
+            "subject_number" : {
+                "subject_number" : 10,
+                "subject_name" : "데이터센터프로그래밍",
+                "subject_professor" : "이성원"
+            }
+        }
+    ]
+}
