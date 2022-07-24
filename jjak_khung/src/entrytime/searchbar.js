@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-function SearchBar () {
+const Stack = createNativeStackNavigator();
+
+function SearchBar (props) {
     return (
         <View style={styles.searchWrap}>
             <View style={styles.searchButtonWrap}>
                 <TouchableOpacity
-                    style={styles.searchButton}>
+                    style={styles.searchButton}
+                    onPress={() => {props.navigation.navigate('searchchatlistbysubject')}}>
                         <Text style={{fontSize: 20}}>검색</Text>
                     </TouchableOpacity>
             </View>
             <View style={styles.searchInputWrap}>
                 <TouchableOpacity
-                    style={styles.searchInput}>
+                    style={styles.searchInput}
+                    onPress={() => {
+                        props.navigation.navigate('searchchatlistbysubject');}}>
                         <Text style={{fontSize: 20, color: '#cecece'}}>과목 검색...</Text>
                     </TouchableOpacity>
             </View>

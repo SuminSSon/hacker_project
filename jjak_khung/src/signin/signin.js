@@ -1,10 +1,13 @@
 import React, { Component, useState } from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
 
 function Signin (props) {
+    const navigation = useNavigation();
     let id = '';
     let pw = '';
-    let fontColor = '#AA3333';
+    let fontColor = '#6667AB';
 
     function SetId (_id) {(
         id = _id
@@ -13,6 +16,11 @@ function Signin (props) {
     function SetPw (_pw) {(
         pw = _pw
     )};
+
+    function TrySignIn() {
+        props.UserSignin(id, pw);
+        return true;
+    };
 
     function IdInput () {
         return (
@@ -55,9 +63,9 @@ function Signin (props) {
         return (
             <TouchableOpacity
                 style={styles.signinButton}
-                onPress={() => {
-                    props.UserSignin(id, pw);
-                }}
+                onPress={() => 
+                    navigation.navigate('entrytime')
+                }
             >
                 <Text style={{color: '#ffffff', fontSize: 20}}>로그인</Text>
             </TouchableOpacity>

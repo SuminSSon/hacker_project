@@ -3,7 +3,8 @@
         {
             "chat_number" : 1,
             "chat_max" : 8,
-            "chat_mentee" : 3,"mentor_check" : true,
+            "chat_mentee" : 3,
+            "mentor_check" : true,
             "last_check_time" : "2022-07-01T01:40:50.123123",
             "subject_number" : {
                 "subject_number" : 1,
