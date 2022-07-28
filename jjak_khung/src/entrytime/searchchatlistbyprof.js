@@ -12,6 +12,7 @@ function SearchChatListbyProf (props) {
                 <TouchableOpacity key={i} style={styles.profWrap}
                     onPress={() => {
                         props.setProf(prof);
+                        navigation.navigate('searchresult');
                     }}>
                     <Text style={styles.profText}>{prof}</Text>
                 </TouchableOpacity>

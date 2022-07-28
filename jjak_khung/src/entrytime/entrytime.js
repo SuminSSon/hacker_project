@@ -5,6 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ChatList from './chatlist';
 import SearchChatListbySubject from './searchchatlistbysubject';
 import SearchChatListbyProf from './searchchatlistbyprof';
+import SearchResult from './searchresult';
+import MentorEntry from './mentorentry';
 import SubjectList from '../json/subjects.json';
 
 const Stack = createNativeStackNavigator();
@@ -49,10 +51,6 @@ function Entrytime (props) {
     };
 
     const userInfo = props.userInfo;
-    useEffect(() => {
-        MakeSubjectList();
-        MakeProfessorList(subject);
-    });
     MakeSubjectList();
     return (
         <Stack.Navigator>
@@ -64,6 +62,12 @@ function Entrytime (props) {
             </Stack.Screen>
             <Stack.Screen name='searchchatlistbyprof' options={{title: '"' + subject + '" ' + "교수님 검색", headerBackTitle: "뒤로"}}>
                 {props => <SearchChatListbyProf MakeProfessorList={MakeProfessorList} setProf={setProf}/>}
+            </Stack.Screen>
+            <Stack.Screen name='searchresult' options={{title: subject + ' - ' + prof, headerBackTitle: "뒤로"}}>
+                {props => <SearchResult />}
+            </Stack.Screen>
+            <Stack.Screen name='mentorentry' options={{title: "멘토 등록", headerBackTitle: "뒤로"}}>
+                {props => <MentorEntry subject={subject} prof={prof}/>}
             </Stack.Screen>
         </Stack.Navigator>
     );
