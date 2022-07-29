@@ -1,11 +1,25 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import SubjectBoardPosts from '../../json/subjectboardposts.json';
 
-function Postlist (props) {
+function SubjectBoardList (props) {
     const navigation = useNavigation();
-    const posts = SubjectBoardPosts.subjectBoardPosts;
+    const subjectList = props.subjectList;
+
+    function Header() {
+        return(
+            <View style={styles.headerWrap}>
+                <View style={styles.headerContentWrap}>
+                    <TouchableOpacity style={styles.subjectBoardButton}>
+                        <Text style={{fontSize: 25}}>{'\n'}과목 게시판</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.infoBoardButton}>
+                        <Text style={{fontSize: 25}}>{'\n'}정보 게시판</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    };
 
     function Footer() {
         return(
@@ -31,56 +45,33 @@ function Postlist (props) {
         );
     };
 
-    function Posts() {
+    function SubjectBoardList() {
         return(
-            <View style={styles.postsWrap}>
-                <ScrollView>
-                    {posts.map((post, index) => (
-                        <TouchableOpacity key={index} style={styles.postButton}
-                            onPress={() => {
-                                navigation.navigate('readpost', {
-                                    post: post
-                                });
-                            }}>
-                            <View style={styles.postTitleWrap}>
-                                <Text style={{fontSize: 25, padding: 20}}>{post.board_title}</Text>
-                            </View>
-                            <View style={styles.postInfoWrap}>
-                                <Text style={{justifyContent: 'flex-end'}}>{post.board_date}</Text>
-                                <Text style={{justifyContent: 'flex-start', alignSelf: 'center'}}>{post.subject_professor}</Text>
-                            </View>
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-            </View>
-            
-        );
-    };
-
-    function WritePostButton() {
-        return(
-            <View style={styles.writePostButtonWrap}>
-                <TouchableOpacity style={styles.writePostButton}
-                    onPress={() => {
-                        navigation.navigate('writepost')
-                    }}>
-                    <Text style={{fontSize: 20, color: '#ffffff'}}>글 쓰기</Text>
-                </TouchableOpacity>
-            </View>
+            <ScrollView style={styles.subjectBoardList}>
+                {subjectList.map((subject, i) => (
+                    <TouchableOpacity key={i} style={styles.subjectBoard}
+                        onPress={() => {
+                            props.setSubject(subject)
+                            navigation.navigate('postlist');
+                        }}>
+                        <Text style={{fontSize: 25, padding: 20}}>{subject}</Text>
+                    </TouchableOpacity>
+                ))}
+            </ScrollView>
         );
     };
 
     return(
-        <View style={styles.postListWrap}>
-            <Posts/>
-            <WritePostButton />
-            <Footer/>
+        <View style={styles.subjectBoardListWrap}>
+            <Header />
+            <SubjectBoardList />
+            <Footer />
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    postListWrap: {
+    subjectBoardListWrap: {
         height: '100%',
         justifyContent: 'space-between'
     },
@@ -106,39 +97,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    postsWrap: {
-        height: 600,
-        padding: 20
+    subjectBoardList: {
+        margin: 20
     },
-    postButton: {
-        display: 'flex',
-        flexDirection: 'row',
+    subjectBoard: {
         height: 80,
         marginVertical: 10,
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         backgroundColor: '#cecece',
         borderRadius: 10
-    },
-    postTitleWrap: {
-        width: 190,
-        justifyContent: 'center'
-    },
-    postInfoWrap: {
-        width: 160,
-        justifyContent: 'center'
-    },
-    writePostButtonWrap: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 10
-    },
-    writePostButton: {
-        width: 100,
-        height: 40,
-        backgroundColor: '#6667AB',
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 5
     },
     footerWrap: {
         display: 'flex',
@@ -168,4 +135,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Postlist;
+export default SubjectBoardList;

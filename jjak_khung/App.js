@@ -4,6 +4,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Signin from './src/signin/signin';
 import Entrytime from './src/entrytime/entrytime';
+import Termtime from './src/termtime/termtime';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,9 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name='entrytime' options={{headerShown: false}}>
           {props => <Entrytime userInfo={userInfo}/>}
+        </Stack.Screen>
+        <Stack.Screen name='termtime' options={{headerShown: false}}>
+          {props => <Termtime userInfo={userInfo}/>}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

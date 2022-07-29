@@ -39,7 +39,9 @@ function ChatList (props) {
                     <View style={styles.headerHelpWrap}>
                         <TouchableOpacity
                             style={styles.headerHelpButton}
-                        >
+                            onPress={() => {
+                                navigation.pop();
+                            }}>
                             <Text style={{fontSize: 20}}>?</Text>
                         </TouchableOpacity>
                     </View>
@@ -57,7 +59,10 @@ function ChatList (props) {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footerButtonWrap}>
-                    <TouchableOpacity style={styles.boardButton}>
+                    <TouchableOpacity style={styles.boardButton}
+                        onPress={() => {
+                            navigation.navigate('subjectboard')
+                        }}>
                         <Text style={{fontSize: 30}}>게시판</Text>
                     </TouchableOpacity>
                 </View>

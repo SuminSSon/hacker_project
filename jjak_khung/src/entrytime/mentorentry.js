@@ -1,11 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer , useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Slider from '@react-native-community/slider';
 import TagTable from './tagtable';
 
 function MentorEntry (props) {
+    const navigation = useNavigation();
     const [desiredMentee, setDersiredMentee] = useState(5);
     const [tags, setTags] = useState([]);
 
@@ -44,7 +45,10 @@ function MentorEntry (props) {
                 <TagTable setTags={setTags}/>
             </View>
             <View style={styles.mentorEntryButtonWrap}>
-                <TouchableOpacity style={styles.mentorEntryButton}>
+                <TouchableOpacity style={styles.mentorEntryButton}
+                    onPress={() => {
+                        navigation.pop();
+                    }}>
                     <Text style={{fontSize: 25, padding: 10}}>등록 하기</Text>
                 </TouchableOpacity>
             </View>

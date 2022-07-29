@@ -7,6 +7,7 @@ import SearchChatListbySubject from './searchchatlistbysubject';
 import SearchChatListbyProf from './searchchatlistbyprof';
 import SearchResult from './searchresult';
 import MentorEntry from './mentorentry';
+import SubjectBoard from '../board/subjectboard/subjectboard';
 import SubjectList from '../json/subjects.json';
 
 const Stack = createNativeStackNavigator();
@@ -57,17 +58,20 @@ function Entrytime (props) {
             <Stack.Screen name='chatlist' options={{headerShown: false}}>
                 {props => <ChatList userInfo={userInfo} />}
             </Stack.Screen>
-            <Stack.Screen name='searchchatlistbysubject' options={{title: "과목 검색", headerBackTitle: "뒤로"}}>
+            <Stack.Screen name='searchchatlistbysubject' options={{title: "과목 검색", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
                 {props => <SearchChatListbySubject MakeSubjectList={MakeSubjectList} setSubject={setSubject}/>}
             </Stack.Screen>
-            <Stack.Screen name='searchchatlistbyprof' options={{title: '"' + subject + '" ' + "교수님 검색", headerBackTitle: "뒤로"}}>
+            <Stack.Screen name='searchchatlistbyprof' options={{title: '"' + subject + '" ' + "교수님 검색", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
                 {props => <SearchChatListbyProf MakeProfessorList={MakeProfessorList} setProf={setProf}/>}
             </Stack.Screen>
-            <Stack.Screen name='searchresult' options={{title: subject + ' - ' + prof, headerBackTitle: "뒤로"}}>
+            <Stack.Screen name='searchresult' options={{title: subject + ' - ' + prof, headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
                 {props => <SearchResult />}
             </Stack.Screen>
-            <Stack.Screen name='mentorentry' options={{title: "멘토 등록", headerBackTitle: "뒤로"}}>
+            <Stack.Screen name='mentorentry' options={{title: "멘토 등록", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
                 {props => <MentorEntry subject={subject} prof={prof}/>}
+            </Stack.Screen>
+            <Stack.Screen name='subjectboard' options={{headerShown: false}}>
+                {props => <SubjectBoard MakeSubjectList={MakeSubjectList} userInfo={userInfo}/>}
             </Stack.Screen>
         </Stack.Navigator>
     );
