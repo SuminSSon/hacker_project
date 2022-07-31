@@ -3,6 +3,8 @@ import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-nati
 import SearchBar from './searchbar';
 import Chatrooms from '../json/chatrooms.json';
 
+
+
 function ChatList (props) {
     const userInfo = props.userInfo;
     let chatroomList = Chatrooms;
