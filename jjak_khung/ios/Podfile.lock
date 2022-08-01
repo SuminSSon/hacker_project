@@ -292,6 +292,7 @@ PODS:
     - React-logger (= 0.68.2)
     - React-perflogger (= 0.68.2)
   - RNCPicker (2.4.2):
+    - React-Core
   - RNGestureHandler (2.5.0):
     - React-Core
   - RNScreens (3.15.0):
@@ -335,7 +336,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
-  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNGestureHandler (from `../../../../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -411,7 +412,7 @@ EXTERNAL SOURCES:
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
-    :path: "../node_modules/react-native-gesture-handler"
+    :path: "../../../../node_modules/react-native-gesture-handler"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   Yoga:
