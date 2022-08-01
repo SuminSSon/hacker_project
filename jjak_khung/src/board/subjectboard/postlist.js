@@ -62,7 +62,8 @@ function Postlist (props) {
             <View style={styles.writePostButtonWrap}>
                 <TouchableOpacity style={styles.writePostButton}
                     onPress={() => {
-                        navigation.navigate('writepost')
+                        navigation.navigate('writepost', {
+                        })
                     }}>
                     <Text style={{fontSize: 20, color: '#ffffff'}}>글 쓰기</Text>
                 </TouchableOpacity>
