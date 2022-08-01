@@ -43,7 +43,7 @@ const App = () => {
         <Stack.Screen name='termtime' options={{headerShown: false}}>
           {props => <Termtime userInfo={userInfo}/>}
         </Stack.Screen>
-        <Stack.Screen name='emailverification' options={{headerShown: false}}>
+        <Stack.Screen name='emailverification' >
           {props => <Emailverification/>}
         </Stack.Screen>
       </Stack.Navigator>
