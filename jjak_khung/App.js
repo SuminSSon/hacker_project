@@ -23,6 +23,7 @@ const App = () => {
     } else {
       return false;
     }
+<<<<<<< Updated upstream
   }
 
   if (IsSessionSet()) {
@@ -40,6 +41,28 @@ const App = () => {
       <Signin UserSignin={UserSignin} userId={userId.id} userPassword={userPassword.password}/>
     );
   }
+=======
+  };
+  
+  return(
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='signin'>
+        <Stack.Screen name='signin' options={{headerShown: false}}>
+          {props => <Signin UserSignin={UserSignin} />}
+        </Stack.Screen>
+        <Stack.Screen name='entrytime' options={{headerShown: false}}>
+          {props => <Entrytime userInfo={userInfo}/>}
+        </Stack.Screen>
+        <Stack.Screen name='termtime' options={{headerShown: false}}>
+          {props => <Termtime userInfo={userInfo}/>}
+        </Stack.Screen>
+        <Stack.Screen name='emailverification'>
+          {props => <Emailverification/>}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+>>>>>>> Stashed changes
 };
 
 const styles = StyleSheet.create({
