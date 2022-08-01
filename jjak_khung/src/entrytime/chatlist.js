@@ -1,11 +1,32 @@
 import React, { Component, useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SearchBar from './searchbar';
 import Chatrooms from '../json/chatrooms.json';
 
 function ChatList (props) {
+    const navigation = useNavigation();
     const userInfo = props.userInfo;
-    let chatroomList = Chatrooms;
+    let mentorChatroomList = [];
+    let menteeChatroomList = [];
+
+    function MakeMentorChatroomList () {
+        mentorChatroomList = [];
+        for (const chatroom of Chatrooms.chatrooms){
+            if (chatroom.mentor_check) {
+                mentorChatroomList.push(chatroom);
+            }
+        }
+    };
+
+    function MakeMenteeChatroomList () {
+        menteeChatroomList = [];
+        for (const chatroom of Chatrooms.chatrooms){
+            if (!chatroom.mentor_check) {
+                menteeChatroomList.push(chatroom);
+            }
+        }
+    }
 
     function Header () {
         return (
@@ -18,7 +39,9 @@ function ChatList (props) {
                     <View style={styles.headerHelpWrap}>
                         <TouchableOpacity
                             style={styles.headerHelpButton}
-                        >
+                            onPress={() => {
+                                navigation.pop();
+                            }}>
                             <Text style={{fontSize: 20}}>?</Text>
                         </TouchableOpacity>
                     </View>
@@ -36,7 +59,10 @@ function ChatList (props) {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footerButtonWrap}>
-                    <TouchableOpacity style={styles.boardButton}>
+                    <TouchableOpacity style={styles.boardButton}
+                        onPress={() => {
+                            navigation.navigate('subjectboard')
+                        }}>
                         <Text style={{fontSize: 30}}>게시판</Text>
                     </TouchableOpacity>
                 </View>
@@ -45,24 +71,39 @@ function ChatList (props) {
     };
 
     function ChatroomList () {
+        MakeMentorChatroomList();
+        MakeMenteeChatroomList();
         return(
             <View style={styles.chatroomListWrap}>
-                <SearchBar/>
+                <SearchBar navigation={navigation} MakeSubjectList={props.MakeSubjectList}/>
                 <ScrollView style={styles.chatroomList}>
                     <View style={styles.mentorChatroomListWrap}>
                         <View style={styles.mentorChatroomListTitle}>
-                            <Text style={{fontSize: 25}}>멘토 채팅방</Text>
+                            <Text style={{fontSize: 30}}>멘토 채팅방</Text>
                         </View>
                         <View style={styles.mentorChatroomList}>
-                            
+                            {mentorChatroomList.map((chatroom, i) => (
+                                <View key={i} style={styles.mentorChatroom}>
+                                    <Text style={{fontSize: 25, padding: 15}}>{chatroom.subject_number.subject_name}</Text>
+                                </View>
+                            ))}
                         </View>
                     </View>
                     <View style={styles.menteeChatroomListWrap}>
                         <View stlye={styles.menteeChatroomListTitle}>
-
+                            <Text style={{fontSize: 30}}>멘티 채팅방</Text>
                         </View>
                         <View style={styles.menteeChatroomList}>
-
+                            {menteeChatroomList.map((chatroom, i) => (
+                                <View key={i} style={styles.menteeChatroom}>
+                                    <Text style={{fontSize: 25, padding: 15, width: 250}}>{chatroom.subject_number.subject_name}</Text>
+                                    <TouchableOpacity 
+                                        style={styles.chatOutButton}
+                                        onPress={() => {alert('멘티 신청을 취소하겠습니까?')}}>
+                                        <Text style={{fontSize: 15, color: '#ffffff'}}>신청취소</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            ))}
                         </View>
                     </View>
                 </ScrollView>
@@ -127,6 +168,45 @@ const styles = StyleSheet.create({
     mentorChatroomListTitle: {
     },
     mentorChatroomList: {
+        marginTop: 10
+    },
+    mentorChatroom: {
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: '#cecece',
+        backgroundColor: '#cecece'
+    },
+    menteeChatroomListWrap: {
+        marginTop: 20
+    },
+    menteeChatroomListTitle: {
+
+    },
+    menteeChatroomList: {
+        marginTop: 10
+    },
+    menteeChatroom: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginLeft: 10,
+        marginRight: 10,
+        borderWidth: 1,
+        borderColor: '#cecece',
+        backgroundColor: '#cecece'
+    },
+    chatOutButton: {
+        width: 60,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 7,
+        marginRight: 10,
+        borderWidth: 1,
+        borderRadius: 6,
+        borderColor: '#aa0000',
+        backgroundColor: '#aa0000'
     },
     footerWrap: {
         display: 'flex',

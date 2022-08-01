@@ -1,26 +1,51 @@
 import React, { Component, useState } from 'react';
-import "react-native-gesture-handler";
-import { NavigationContainer, StackActions } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View, Text } from 'react-native';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Signin from './src/signin/signin';
-import ChatList from './src/entrytime/chatlist';
+import Entrytime from './src/entrytime/entrytime';
+import Termtime from './src/termtime/termtime';
 import Emailverification from './src/signup/emailverification';
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  const [userId, setUserId] = useState({id: ''});
+  const [userPassword, setUserPassword] = useState({password: ''});
+  const userInfo = {
+    user_name: '홍길동',
+    user_point: 610,
+    user_recomd: 5,
+  };
+
+  function UserSignin (_id, _password) {
+    setUserId({id: _id});
+    setUserPassword({password: _password});
+  };
+
+  function IsSessionSet () {
+    if (userId.id !== '' && userPassword.password !== ''){
+      return true;
+    } else {
+      return false;
+    }
+  };
+  
   return(
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='Signin'
-          component={Signin}
-        />
-        <Stack.Screen
-          name='Emailverification'
-          component={Emailverification}
-        />
+      <Stack.Navigator initialRouteName='signin'>
+        <Stack.Screen name='signin' options={{headerShown: false}}>
+          {props => <Signin UserSignin={UserSignin} />}
+        </Stack.Screen>
+        <Stack.Screen name='entrytime' options={{headerShown: false}}>
+          {props => <Entrytime userInfo={userInfo}/>}
+        </Stack.Screen>
+        <Stack.Screen name='termtime' options={{headerShown: false}}>
+          {props => <Termtime userInfo={userInfo}/>}
+        </Stack.Screen>
+        <Stack.Screen name='emailverification' options={{headerShown: false}}>
+          {props => <Emailverification/>}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
