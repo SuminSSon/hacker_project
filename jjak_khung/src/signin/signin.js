@@ -88,6 +88,7 @@ function Signin (props) {
             <SigninBox/>
             <Button
                 title="회원가입"
+                onPress={()=> navigation.navigate('emailverification')}
             />
             <Text>{id}</Text>
             <Text>{pw}</Text>
