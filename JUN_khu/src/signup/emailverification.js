@@ -17,13 +17,23 @@ function Emailverification() {
             />
         );
     };
-    const EmailButton = () => {
+    const VerificationNum =()=>{
+        return(
+            <TextInput
+            style={styles.verificationNum}
+            placeholder='인증번호'
+            placeholderTextColor={'#555555'}
+            />
+        );
+    };
+    const EmailRequireButton = () => {
         return (
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.requirebutton}>
                 <Text style={{ color: "white" }}>인증번호 요청</Text>
             </TouchableOpacity>
         );
     };
+    
 
 
     return (
@@ -34,10 +44,13 @@ function Emailverification() {
                 style={{ marginTop: 50 }}
             />
             <Text style={{ fontSize: 20, marginTop: 20 }}>경희대 메일 인증</Text>
-            <View style={{ display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
-                <EmailBox />
-                <EmailButton />
-            </View>
+                <View style={{ display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <EmailBox />
+                    <EmailRequireButton />
+                </View>
+                    <View>
+                        <VerificationNum/>
+                    </View>
         </View>
     );
 };
@@ -56,7 +69,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingLeft: 10,
     },
-    button: {
+    requirebutton: {
         marginLeft: 8,
         borderWidth: 1,
         borderRadius: 5,
@@ -64,7 +77,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#555555',
         alignItems:'center',
-    }
+    },
+    verificationNum:{
+        
+        width: 358,
+        height:45,
+        marginTop: 20,
+        borderWidth:1,
+        borderRadius: 5,
+        fontSize:18,
+        paddingLeft:10,
+        },
 });
 
 export default Emailverification;
