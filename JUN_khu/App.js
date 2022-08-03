@@ -6,6 +6,7 @@ import Signin from './src/signin/signin';
 import Entrytime from './src/entrytime/entrytime';
 import Termtime from './src/termtime/termtime';
 import Emailverification from './src/signup/emailverification';
+import Signup from './src/signup/signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,14 +38,14 @@ const App = () => {
         <Stack.Screen name='signin' options={{headerShown: false}}>
           {props => <Signin UserSignin={UserSignin} />}
         </Stack.Screen>
+        <Stack.Screen name='signup'options={{title: "이메일 인증", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
+          {props=> <Signup/>}
+        </Stack.Screen>
         <Stack.Screen name='entrytime' options={{headerShown: false}}>
           {props => <Entrytime userInfo={userInfo}/>}
         </Stack.Screen>
         <Stack.Screen name='termtime' options={{headerShown: false}}>
           {props => <Termtime userInfo={userInfo}/>}
-        </Stack.Screen>
-        <Stack.Screen name='emailverification' >
-          {props => <Emailverification/>}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

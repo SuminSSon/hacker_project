@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'rea
 
 function Signin (props) {
     const navigation = useNavigation();
+    
     let id = '';
     let pw = '';
     let fontColor = '#6667AB';
@@ -88,7 +89,7 @@ function Signin (props) {
             <SigninBox/>
             <Button
                 title="회원가입"
-                onPress={()=> navigation.navigate('emailverification')}
+                onPress={()=> navigation.navigate('signup')}
             />
             <Text>{id}</Text>
             <Text>{pw}</Text>
@@ -99,7 +100,7 @@ function Signin (props) {
 const styles = StyleSheet.create({
     signinWrap: {
         marginTop: 180,
-        padding: 20
+        padding: 20,
     },
     signinBox: {
         backgroundColor: '#6667AB',
