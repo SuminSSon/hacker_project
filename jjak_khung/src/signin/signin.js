@@ -2,12 +2,14 @@ import React, { Component, useState } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import UserDB from '../dbtest/user.json';
 
 function Signin (props) {
+    const users = UserDB;
     const navigation = useNavigation();
     let id = '';
     let pw = '';
-    let fontColor = '#6667AB';
+    const [fontColor, setFontColor] = useState('#6667AB');
 
     function SetId (_id) {(
         id = _id
@@ -18,8 +20,13 @@ function Signin (props) {
     )};
 
     function TrySignIn() {
-        props.UserSignin(id, pw);
-        return true;
+        for (const user of users) {
+            if (user.user_id === id && user.user_password === pw){
+                props.UserSignin(user);
+                return true;
+            }
+        }
+        return false;
     };
 
     function IdInput () {
@@ -63,9 +70,18 @@ function Signin (props) {
         return (
             <TouchableOpacity
                 style={styles.signinButton}
-                onPress={() => 
-                    navigation.navigate('entrytime')
-                }
+                onPress={() => {
+                    if (TrySignIn()) {
+                        if (props.semTime === 'entrytime'){
+                            navigation.navigate('entrytime');
+                        } else if (props.semTime === 'termtime') {
+                            navigation.navigate('termtime');
+                        }
+                    } else {
+                        alert('로그인 실패');
+                        setFontColor('#ff0000');
+                    }
+                }}
             >
                 <Text style={{color: '#ffffff', fontSize: 20}}>로그인</Text>
             </TouchableOpacity>
@@ -90,8 +106,6 @@ function Signin (props) {
                 title="회원가입"
                 onPress={()=> navigation.navigate('emailverification')}
             />
-            <Text>{id}</Text>
-            <Text>{pw}</Text>
         </View>
     );
 };

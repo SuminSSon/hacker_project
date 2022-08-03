@@ -11,9 +11,25 @@ import SubjectList from '../../json/subjects.json';
 const Stack = createNativeStackNavigator();
 
 function SubjectBoard(props) {
-    const subjectList = props.MakeSubjectList();
     const userInfo = props.userInfo;
     const [subject, setSubject] = useState('');
+
+    function MakeSubjectList() {
+        const subjectList = [];
+        for (const subject of SubjectList.subjectList){
+            var dupplicated = false;
+            for (const item of subjectList){
+                if (item === subject.subject_name){
+                    dupplicated = true;
+                    break;
+                }
+            }
+            if (dupplicated === false){
+                subjectList.push(subject.subject_name);
+            }
+        }
+        return subjectList;
+    };
 
     function MakeProfessorList() {
         const professorList = [];
@@ -33,6 +49,7 @@ function SubjectBoard(props) {
         return professorList;
     };
 
+    const subjectList = MakeSubjectList();
     return (
         <Stack.Navigator initialRouteName='subjectboardlist'>
             <Stack.Screen name='subjectboardlist' options={{ headerShown: false }}>

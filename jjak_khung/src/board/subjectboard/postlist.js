@@ -15,7 +15,7 @@ function Postlist (props) {
                         onPress={() => {
                             navigation.reset({
                                 routes: [{
-                                    name: 'chatlist'
+                                    name: 'entrytime'
                                 }]
                             });
                         }}>

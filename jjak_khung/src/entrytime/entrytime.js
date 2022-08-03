@@ -7,7 +7,6 @@ import SearchChatListbySubject from './searchchatlistbysubject';
 import SearchChatListbyProf from './searchchatlistbyprof';
 import SearchResult from './searchresult';
 import MentorEntry from './mentorentry';
-import SubjectBoard from '../board/subjectboard/subjectboard';
 import SubjectList from '../json/subjects.json';
 
 const Stack = createNativeStackNavigator();
@@ -44,7 +43,7 @@ function Entrytime (props) {
                 }
             }
             if (dupplicated === false && professor.subject_name === subject){
-                let profName = professor.subject_professor + " 교수님";
+                let profName = professor.subject_professor;
                 professorList.push(profName);
             }
         }
@@ -65,13 +64,10 @@ function Entrytime (props) {
                 {props => <SearchChatListbyProf MakeProfessorList={MakeProfessorList} setProf={setProf}/>}
             </Stack.Screen>
             <Stack.Screen name='searchresult' options={{title: subject + ' - ' + prof, headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
-                {props => <SearchResult />}
+                {props => <SearchResult subject={subject} prof={prof}/>}
             </Stack.Screen>
             <Stack.Screen name='mentorentry' options={{title: "멘토 등록", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: {backgroundColor: '#6667AB'}}}>
                 {props => <MentorEntry subject={subject} prof={prof}/>}
-            </Stack.Screen>
-            <Stack.Screen name='subjectboard' options={{headerShown: false}}>
-                {props => <SubjectBoard MakeSubjectList={MakeSubjectList} userInfo={userInfo}/>}
             </Stack.Screen>
         </Stack.Navigator>
     );

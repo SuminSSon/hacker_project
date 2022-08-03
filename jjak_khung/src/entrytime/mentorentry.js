@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native';
 import { NavigationContainer , useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Slider from '@react-native-community/slider';
@@ -15,6 +15,27 @@ function MentorEntry (props) {
             <Text style={{fontSize: 25, color: '#aa0000'}}>{desiredMentee}</Text>
         );
     };
+
+    function entryMsg() {
+        Alert.alert(
+            '아래의 정보로\n멘토 등록 하시겠어요?',
+            '\n과목명 : \n' + props.subject + ' - ' + props.prof + ' 교수님\n\n희망 멘티 인원 : ' + desiredMentee + '명\n\n어필 태그 : ' + tags,
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { 
+                    text: "OK", 
+                    onPress: mentorEntry()
+                }
+            ]
+        );
+    };
+
+    function mentorEntry() {
+        return true;
+    }
 
     return(
         <View style={styles.mentorEntryWrap}>
@@ -42,12 +63,12 @@ function MentorEntry (props) {
             </View>
             <View style={styles.setTagsWrap}>
                 <Text style={{fontSize: 25, paddingTop: 20}}>어필 태그(최대 5개)</Text>
-                <TagTable setTags={setTags}/>
+                <TagTable tags={tags} setTags={setTags}/>
             </View>
             <View style={styles.mentorEntryButtonWrap}>
                 <TouchableOpacity style={styles.mentorEntryButton}
                     onPress={() => {
-                        navigation.pop();
+                        entryMsg();
                     }}>
                     <Text style={{fontSize: 25, padding: 10}}>등록 하기</Text>
                 </TouchableOpacity>

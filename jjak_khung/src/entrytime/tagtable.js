@@ -2,19 +2,27 @@ import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 function TagTable(props) {
+    const tags = props.tags;
     const appealTags = [
         ['#친절', '#웃음', '#상냥', '#유쾌'],
         ['#차분', '#열정', '#개성적', '#귀여움'],
         ['#듬직', '#감성적', '#외향', '#내향'],
         ['#낙천', '#지적', '#성실', '#온화']
     ];
+
+    function handleTagButtonPressed(value) {
+        const tempTags = [...tags];
+        tempTags.push(value);
+        props.setTags(tempTags);
+    };
     
     return(
         <View style={styles.tagTableWrap}>
             {appealTags.map((tags, index) => (
                 <View key={index} style={styles.tagRow}>
                     {tags.map((tag, i) => (
-                        <TouchableOpacity key={i} style={styles.tagButton}>
+                        <TouchableOpacity key={i} style={styles.tagButton}
+                            onPress={() => handleTagButtonPressed(tag)}>
                             <Text style={{fontSize: 17, color: '#000000'}}>{tag}</Text>
                         </TouchableOpacity>
                     ))}

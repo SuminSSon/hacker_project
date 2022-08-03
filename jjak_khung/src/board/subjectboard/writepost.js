@@ -1,11 +1,12 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 function WritePost (props) {
     const route = useRoute();
+    const navigation = useNavigation();
     const userInfo = props.userInfo;
     const subject = props.subject;
     const profList = props.MakeProfessorList();
@@ -23,39 +24,55 @@ function WritePost (props) {
 
     const items = MakeItems();
 
-    function PostSubject() {
-        return(
-            <View style={styles.postSubjectWrap}>
-                <Text style={{fontSize: 25}}>과목명 : {subject}</Text>
-                <View style={styles.profPickerWrap}>
-                    <DropDownPicker
-                        items={items}
-                        open={open}
-                        setOpen={setOpen}
-                        value={prof}
-                        setValue={setProf}
-                        containerStyle={styles.profPickerContainer}
-                        style={styles.profPicker}
-                        dropDownStyle={styles.profPickerDropDown}
-                    />
-                    <PostTitleWrtie />
-                </View>
-            </View>
-        );
-    };
-
     function PostTitleWrtie() {
         return(
             <TextInput style={styles.postTitleWrite}
                 placeholder="제목"
                 placeholderTextColor={'#555'}
+                autoCapitalize={'none'}
             />
+        );
+    };
+
+    function PostContent() {
+        return(
+            <TextInput style={styles.postContentWrite}
+                placeholder="내용을 입력해주세요."
+                placeholderTextColor={'#555'}/>
+        );
+    };
+
+    function PostButton() {
+        return(
+            <View style={styles.postButtonWrap}>
+                <TouchableOpacity style={styles.postButton}
+                    onPress={() => {
+                        navigation.pop();
+                    }}>
+                    <Text style={{fontSize: 20, color: '#ffffff'}}>글 쓰기</Text>
+                </TouchableOpacity>
+            </View>
         );
     };
 
     return(
         <View style={styles.writePostWrap}>
-            <PostSubject />
+            <Text style={{fontSize: 25}}>과목명 : {subject}</Text>
+            <View style={styles.postWrap}>
+                <DropDownPicker
+                    items={items}
+                    open={open}
+                    setOpen={setOpen}
+                    value={prof}
+                    setValue={setProf}
+                    containerStyle={styles.profPickerContainer}
+                    style={styles.profPicker}
+                    dropDownStyle={styles.profPickerDropDown}
+                />
+                <PostTitleWrtie />
+                <PostContent />
+                <PostButton />
+            </View>
         </View>
     );
 };
@@ -65,13 +82,14 @@ const styles = StyleSheet.create({
         padding: 20,
         marginTop: 10
     },
-    postSubjectWrap: {
-        
+    postWrap: {
+
     },
     profPickerContainer: {
         marginVertical: 20
     },
     profPicker: {
+        borderRadius: 5
     },
     profPickerDropDown: {
     },
@@ -80,7 +98,32 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         paddingLeft: 10,
-        fontSize: 20
+        marginVertical: 10,
+        fontSize: 20,
+        backgroundColor: '#fafafa'
+    },
+    postContentWrite: {
+        marginVertical: 20,
+        height: 300,
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
+        fontSize: 20,
+        backgroundColor: '#fafafa'
+    },
+    postButtonWrap: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-end'
+    },
+    postButton: {
+        width: 100,
+        height: 50,
+        marginVertical: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        backgroundColor: '#575757'
     }
 });
 

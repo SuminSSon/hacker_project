@@ -2,23 +2,68 @@ import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Chatrooms from '../json/searchchatrooms.json';
+import Chatrooms from '../dbtest/chat.json';
+import User from '../dbtest/user.json';
+import Member from '../dbtest/member.json';
+import SubjectInfo from '../dbtest/subject_json.json';
+import SearchedChatrooms from '../json/searchchatrooms.json';
 
 const Stack = createNativeStackNavigator();
 
 function SearchResult (props) {
-    const chatrooms = Chatrooms.chatrooms;
+    const chatrooms = Chatrooms;
+
+    function getSubjectNumber() {
+        const subjects = SubjectInfo;
+        for (const subject of subjects) {
+            if (subject.subject_name === props.subject && subject.subject_professor === props.prof) {
+                return subject.subeject_number;
+            }
+        }
+        return -1;
+    };
+
+    function getUserInfo(user_number){
+        for (const user of User) {
+            if (user.user_number === user_number) {
+                return user;
+            }
+        }
+    }
+
+    function getMentorInfo(chat_number) {
+        for (const member of Member) {
+            if (member.chat_number === chat_number && member.mentor_check === true){
+                return getUserInfo(member.user_number);
+            }
+        }
+    };
+
+    function makeSearchedChatrooms() {
+        const subjectNumber = getSubjectNumber();
+        const temp = [];
+        for (const chatroom of chatrooms) {
+            if (chatroom.subject_number === subjectNumber){
+                const mentorInfo = getMentorInfo(chatroom.chat_number);
+                temp.push({ ...chatroom, mentor_info: mentorInfo});
+            }
+        }
+        return temp;
+    };
+
+    const SearchedChatrooms = makeSearchedChatrooms();
+
     const navigation = useNavigation();
     return(
         <View style={styles.searchResultWrap}>
             <Text style={{fontSize: 20, padding: 10}}>등록된 멘토</Text>
             <ScrollView style={styles.searchResultList}>
-                {chatrooms.map((chatroom, index) => (
+                {SearchedChatrooms.map((chatroom, index) => (
                     <View key={index} style={styles.chatroomWrap}>
                         <View style={styles.chatroomInfoWrap}>
                             <View style={styles.chatroomMentorInfoWrap}>
                                 <View style={styles.mentorNameandRecomdWrap}>
-                                    <Text style={{fontSize: 25, padding: 5}}>{chatroom.user_name} {chatroom.user_recom}</Text>
+                                    <Text style={{fontSize: 25, padding: 5}}>{chatroom.mentor_info.user_name} {chatroom.mentor_info.user_recom}</Text>
                                 </View>
                                 <View style={styles.mentorTagWrap}>
                                     <Text style={{fontSize: 20, padding: 5}}>{chatroom.user_tag}</Text>

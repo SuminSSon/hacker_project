@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import SearchBar from './searchbar';
 import Chatrooms from '../json/chatrooms.json';
@@ -9,6 +9,40 @@ function ChatList (props) {
     const userInfo = props.userInfo;
     let mentorChatroomList = [];
     let menteeChatroomList = [];
+
+    function helpMsg() {
+        const msg = '\n문의는 아래의 메일로 부탁드립니다.\njjak_khung@khu.ac.kr\n';
+        Alert.alert(
+            "문의 하기",
+            msg,
+            [
+                {
+                    text: "확인"
+                }
+            ]
+        );
+    };
+
+    function menteeCancelMsg() {
+        Alert.alert(
+            '경고!',
+            "멘티 신청을 취소하시겠습니까?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { 
+                    text: "OK", 
+                    onPress: menteeCancel
+                }
+            ]
+        );
+    };
+
+    function menteeCancel() {
+        alert('cancel');
+    };
 
     function MakeMentorChatroomList () {
         mentorChatroomList = [];
@@ -39,9 +73,7 @@ function ChatList (props) {
                     <View style={styles.headerHelpWrap}>
                         <TouchableOpacity
                             style={styles.headerHelpButton}
-                            onPress={() => {
-                                navigation.pop();
-                            }}>
+                            onPress={() => helpMsg()}>
                             <Text style={{fontSize: 20}}>?</Text>
                         </TouchableOpacity>
                     </View>
@@ -99,7 +131,7 @@ function ChatList (props) {
                                     <Text style={{fontSize: 25, padding: 15, width: 250}}>{chatroom.subject_number.subject_name}</Text>
                                     <TouchableOpacity 
                                         style={styles.chatOutButton}
-                                        onPress={() => {alert('멘티 신청을 취소하겠습니까?')}}>
+                                        onPress={() => menteeCancelMsg()}>
                                         <Text style={{fontSize: 15, color: '#ffffff'}}>신청취소</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -154,6 +186,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#999ADE'
+    },
+    help: {
+        fontSize: 20
     },
     chatroomListWrap: {
         height: 600,

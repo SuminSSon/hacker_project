@@ -13,7 +13,14 @@ function SubjectBoardList (props) {
                     <TouchableOpacity style={styles.subjectBoardButton}>
                         <Text style={{fontSize: 25}}>{'\n'}과목 게시판</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.infoBoardButton}>
+                    <TouchableOpacity style={styles.infoBoardButton}
+                        onPress={() => {
+                            navigation.reset({
+                                routes: [{
+                                    name: 'infoboard'
+                                }]
+                            })
+                        }}>
                         <Text style={{fontSize: 25}}>{'\n'}정보 게시판</Text>
                     </TouchableOpacity>
                 </View>
@@ -29,7 +36,7 @@ function SubjectBoardList (props) {
                         onPress={() => {
                             navigation.reset({
                                 routes: [{
-                                    name: 'chatlist'
+                                    name: 'entrytime'
                                 }]
                             });
                         }}>

@@ -14,7 +14,7 @@ function SearchChatListbyProf (props) {
                         props.setProf(prof);
                         navigation.navigate('searchresult');
                     }}>
-                    <Text style={styles.profText}>{prof}</Text>
+                    <Text style={styles.profText}>{prof} 교수님</Text>
                 </TouchableOpacity>
             ))}
         </ScrollView>
