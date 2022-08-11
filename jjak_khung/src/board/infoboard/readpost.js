@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 function ReadPost (props) {
@@ -7,6 +7,13 @@ function ReadPost (props) {
     const post = route.params.post;
     const date = post.board_date.replace('T', ' ');
     const userInfo = props.userInfo;
+
+    let comment = '';
+
+    function setComment(text) {(
+        comment = text
+    )};
+
 
     function PostInfo() {
         return(
@@ -45,19 +52,34 @@ function ReadPost (props) {
         );
     };
 
-    function WriteComment() {
+    function WriteCommentButton() {
         return(
             <View style={styles.writeCommentWrap}>
                 <View style={styles.commentInputWrap}>
                     <TextInput style={styles.commentInput}
                         placeholder='댓글 입력'
                         placeholderTextColor={'#575757'}
-                        multiline={true}/>
+                        multiline={true}
+                        onChangeText={(text) => setComment(text)}/>
                 </View>
-                <TouchableOpacity style={styles.writeCommentButton}>
+                <TouchableOpacity style={styles.writeCommentButton}
+                    onPress={() => writeComment()}>
                     <Text>댓글</Text>
                 </TouchableOpacity>
             </View>
+        );
+    };
+
+    function writeComment() {
+        Alert.alert(
+            '',
+            '내용 : ' + comment,
+            [
+                {
+                    text: '확인',
+                    style: 'cancel'
+                }
+            ]
         );
     };
 
@@ -68,7 +90,7 @@ function ReadPost (props) {
                 <PostContent />
                 <PostComment />
             </ScrollView>
-            <WriteComment />
+            <WriteCommentButton />
         </View>
     );
 };

@@ -7,7 +7,7 @@ import Entrytime from './src/entrytime/entrytime';
 import Termtime from './src/termtime/termtime';
 import SubjectBoard from './src/board/subjectboard/subjectboard';
 import InfoBoard from './src/board/infoboard/infoboard';
-import Emailverification from './src/signup/emailverification';
+import Signup from './src/signup/signup';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +65,9 @@ const App = () => {
         </Stack.Screen>
         <Stack.Screen name='infoboard' options={{ headerShown: false }}>
           {props => <InfoBoard semTime={semTime} userInfo={userInfo} />}
+        </Stack.Screen>
+        <Stack.Screen name='signup'>
+          {props => <Signup />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

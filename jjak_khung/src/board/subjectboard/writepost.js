@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -12,7 +12,18 @@ function WritePost (props) {
     const profList = props.MakeProfessorList();
     const [open, setOpen] = useState(false);
     const [prof, setProf] = useState(profList[0]);
+
+    let title = '';
+    let content = '';
     
+    function setTitle(_title) {(
+        title = _title
+    )};
+
+    function setContent(_content) {(
+        content = _content
+    )};
+
     function MakeItems() {
         const tempList = [];
         profList.map((professor, index) => {
@@ -30,7 +41,7 @@ function WritePost (props) {
                 placeholder="제목"
                 placeholderTextColor={'#555'}
                 autoCapitalize={'none'}
-            />
+                onChangeText={(text) => setTitle(text)}/>
         );
     };
 
@@ -38,7 +49,8 @@ function WritePost (props) {
         return(
             <TextInput style={styles.postContentWrite}
                 placeholder="내용을 입력해주세요."
-                placeholderTextColor={'#555'}/>
+                placeholderTextColor={'#555'}
+                onChangeText={(text) => setContent(text)}/>
         );
     };
 
@@ -46,12 +58,23 @@ function WritePost (props) {
         return(
             <View style={styles.postButtonWrap}>
                 <TouchableOpacity style={styles.postButton}
-                    onPress={() => {
-                        navigation.pop();
-                    }}>
+                    onPress={() => postMsg()}>
                     <Text style={{fontSize: 20, color: '#ffffff'}}>글 쓰기</Text>
                 </TouchableOpacity>
             </View>
+        );
+    };
+
+    function postMsg() {
+        Alert.alert(
+            '글쓰기',
+            '\n글쓴이 : ' + userInfo.user_name + '\n제목 : ' + title + '\n글내용 : \n' + content + "\n과목명 : \n" + subject + ' - ' + prof,
+            [
+                {
+                    text: '확인',
+                    style: 'cancel'
+                }
+            ]
         );
     };
 

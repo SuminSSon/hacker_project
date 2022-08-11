@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Chatrooms from '../dbtest/chat.json';
@@ -51,6 +51,81 @@ function SearchResult (props) {
         return temp;
     };
 
+    function menteeInMsg(chatroom) {
+        const mentorInfo = getMentorInfo(chatroom.chat_number);
+        const subjectNumber = getSubjectNumber(chatroom.subeject_number);
+        Alert.alert(
+            '멘티신청',
+            '\n해당 멘토에게 멘티 신청을 하시겠습니까?\n과목명 : ' + props.subject + ' - ' + props.prof + '\n\n멘토 : ' + mentorInfo.user_name + '\n추천수 : ' + mentorInfo.user_recom + '\n태그 : ' + chatroom.user_tag + '\n',
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { 
+                    text: "OK",
+                    onPress: () => menteeIn(chatroom)
+                }
+            ]
+        );
+    };
+
+    function disabledMsg() {
+        Alert.alert(
+            '',
+            '멘티 신청이 불가능합니다.',
+            [
+                {
+                    text: "확인",
+                    style: "cancel"
+                }
+            ]
+        );
+    };
+
+    function menteeIn(chatroom) {
+        Alert.alert(
+            '',
+            '\n신청되었습니다.',
+            [
+                {
+                    text: '확인',
+                    style: 'cancel'
+                }
+            ]
+        );
+    }
+
+    function DisabledButton() {
+        return(
+            <TouchableOpacity style={styles.chatroomDisabledButton}
+                onPress={() => disabledMsg()}>
+                <Text style={{fontSize: 20, padding: 5, color: '#ffffff'}}>신청불가</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    function InButton(props) {
+        return(
+            <TouchableOpacity style={styles.chatroomInButton}
+                onPress={() => menteeInMsg(props.chatroom)}>
+                <Text style={{fontSize: 20, padding: 5, color: '#ffffff'}}>멘티신청</Text>
+            </TouchableOpacity>
+        );
+    };
+
+    function ChatroomInButton(props) {
+        if (props.chatroom.chat_mentee === props.chatroom.chat_max) {
+            return(
+                <DisabledButton />
+            );
+        } else {
+            return(
+                <InButton chatroom={props.chatroom}/>
+            );
+        }
+    };
+
     const SearchedChatrooms = makeSearchedChatrooms();
 
     const navigation = useNavigation();
@@ -74,9 +149,7 @@ function SearchResult (props) {
                             </View>
                         </View>
                         <View style={styles.chatroomInButtonWrap}>
-                            <TouchableOpacity style={styles.chatroomInButton}>
-                                <Text style={{fontSize: 20, padding: 5, color: '#ffffff'}}>멘티신청</Text>
-                            </TouchableOpacity>
+                            <ChatroomInButton chatroom={chatroom}/>
                         </View>
                     </View>
                 ))}
@@ -127,6 +200,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         width: 120
+    },
+    chatroomDisabledButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#444589',
+        backgroundColor: '#444589'
     },
     chatroomInButton: {
         alignItems: 'center',

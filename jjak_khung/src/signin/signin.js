@@ -104,7 +104,7 @@ function Signin (props) {
             <SigninBox/>
             <Button
                 title="회원가입"
-                onPress={()=> navigation.navigate('emailverification')}
+                onPress={()=> navigation.navigate('signup')}
             />
         </View>
     );

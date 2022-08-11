@@ -27,15 +27,15 @@ function MentorEntry (props) {
                 },
                 { 
                     text: "OK", 
-                    onPress: mentorEntry()
+                    onPress: mentorEntry
                 }
             ]
         );
     };
 
     function mentorEntry() {
-        return true;
-    }
+        navigation.pop();
+    };
 
     return(
         <View style={styles.mentorEntryWrap}>
