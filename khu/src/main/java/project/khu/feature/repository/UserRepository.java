@@ -8,5 +8,5 @@ import project.khu.feature.model.User;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 }
