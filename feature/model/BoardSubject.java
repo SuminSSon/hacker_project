@@ -22,10 +22,12 @@ public class BoardSubject {
     @JoinColumn(name = "subject_number", referencedColumnName = "subject_number")
     private SubjectInfo subject_number;
 
+
     @Id
     @ManyToOne
     @JoinColumn(name = "board_number", referencedColumnName = "board_number")
     private Board board_number;
+
 
     @Override
     public boolean equals(Object o) {

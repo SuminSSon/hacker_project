@@ -7,6 +7,16 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+//@Entity
+//@Table(name="chat")
+//@NoArgsConstructor
+//@Getter
+//@Setter
+//@RequiredArgsConstructor
+//@Builder
+//@AllArgsConstructor
+//@ToString(callSuper = true)
+
 @Entity
 @Table(name="chat" )
 @Data
@@ -19,7 +29,7 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="chat_number", nullable = false)
-    private UUID chat_number; // 채팅방 번호 PK
+    private Integer chat_number; // 채팅방 번호 PK
 
     @Column(name = "chat_max")
     private Integer chat_max; // 최대 인원수

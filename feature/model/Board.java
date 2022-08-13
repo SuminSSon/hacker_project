@@ -3,12 +3,10 @@ package project.khu.feature.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name="board" )
@@ -17,16 +15,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-public class Board {
 
-    @Id
+public class Board{
+
+    @Id  // PK
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="board_number", nullable = false)
-    private UUID board_number; // 게시판 글번호 PK
+    private Integer board_number; // 게시판 글번호 PK
 
     @Column(name = "board_type")
-    @Enumerated(EnumType.STRING)
-    private Integer board_type; // 게시판 유형
+    private BoardType board_type; // 게시판 유형(0 == 정보, 1 == 과목)
 
     @Column(name = "board_title")
     private String board_title; // 글 제목
@@ -54,5 +52,5 @@ public class Board {
     public int hashCode() {
         return getClass().hashCode();
     }
-}
 
+}

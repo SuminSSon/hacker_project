@@ -7,6 +7,17 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Objects;
 
+//@Entity
+//@Table(name="chat_content")
+//@NoArgsConstructor
+//@Getter
+//@Setter
+//@RequiredArgsConstructor
+//@Builder
+//@AllArgsConstructor
+//@ToString(callSuper = true)
+//@IdClass(ChatContentId.class)
+
 @Entity
 @Table(name="chat_content" )
 @Data

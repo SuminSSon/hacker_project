@@ -14,5 +14,5 @@ import java.util.UUID;
 public class ChatContentId implements Serializable {
 
     private Integer chat_send_time;
-    private UUID user_number;
+    private Integer user_number;
 }
