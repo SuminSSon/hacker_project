@@ -7,6 +7,8 @@ import Chatrooms from '../json/chatrooms.json';
 function ChatList (props) {
     const navigation = useNavigation();
     const userInfo = props.userInfo;
+    const [mentorPressed, setMentorPressed] = useState(true);
+    const [menteePressed, setMenteePressed] = useState(true);
     let mentorChatroomList = [];
     let menteeChatroomList = [];
 
@@ -102,6 +104,63 @@ function ChatList (props) {
         );
     };
 
+    function handleMentorChatroomButton() {
+        if(mentorPressed) {
+            setMentorPressed(false);
+        } else {
+            setMentorPressed(true);
+        }
+    };
+
+    function handleMenteeChatroomButton() {
+        if (menteePressed) {
+            setMenteePressed(false);
+        } else {
+            setMenteePressed(true);
+        }
+    };
+
+    function MentorChatroomList() {
+        if (mentorPressed) {
+            return(
+                <View style={styles.mentorChatroomList}>
+                    {mentorChatroomList.map((chatroom, i) => (
+                        <View key={i} style={styles.mentorChatroom}>
+                            <Text style={{fontSize: 25, padding: 15}}>{chatroom.subject_number.subject_name}</Text>
+                        </View>
+                    ))}
+                </View>
+            );
+        } else {
+            return(
+                <View></View>
+            );
+        }
+    };
+
+    function MenteeChatroomList() {
+        if (menteePressed) {
+            return(
+                <View style={styles.menteeChatroomList}>
+                    {menteeChatroomList.map((chatroom, i) => (
+                        <View key={i} style={styles.menteeChatroom}>
+                            <Text style={{fontSize: 25, padding: 15, width: 250}}>{chatroom.subject_number.subject_name}</Text>
+                            <TouchableOpacity 
+                                style={styles.chatOutButton}
+                                onPress={() => menteeCancelMsg()}>
+                                <Text style={{fontSize: 15, color: '#ffffff'}}>신청취소</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))}
+                </View>
+            );
+        } else {
+            return(
+                <View></View>
+            );
+        }
+    }
+
     function ChatroomList () {
         MakeMentorChatroomList();
         MakeMenteeChatroomList();
@@ -110,33 +169,18 @@ function ChatList (props) {
                 <SearchBar navigation={navigation} MakeSubjectList={props.MakeSubjectList}/>
                 <ScrollView style={styles.chatroomList}>
                     <View style={styles.mentorChatroomListWrap}>
-                        <View style={styles.mentorChatroomListTitle}>
-                            <Text style={{fontSize: 30}}>멘토 채팅방</Text>
-                        </View>
-                        <View style={styles.mentorChatroomList}>
-                            {mentorChatroomList.map((chatroom, i) => (
-                                <View key={i} style={styles.mentorChatroom}>
-                                    <Text style={{fontSize: 25, padding: 15}}>{chatroom.subject_number.subject_name}</Text>
-                                </View>
-                            ))}
-                        </View>
+                        <TouchableOpacity style={styles.mentorChatroomListTitle}
+                            onPress={() => handleMentorChatroomButton()}>
+                            <Text style={{fontSize: 30}}>@멘토 채팅방</Text>
+                        </TouchableOpacity>
+                        <MentorChatroomList />
                     </View>
                     <View style={styles.menteeChatroomListWrap}>
-                        <View stlye={styles.menteeChatroomListTitle}>
-                            <Text style={{fontSize: 30}}>멘티 채팅방</Text>
-                        </View>
-                        <View style={styles.menteeChatroomList}>
-                            {menteeChatroomList.map((chatroom, i) => (
-                                <View key={i} style={styles.menteeChatroom}>
-                                    <Text style={{fontSize: 25, padding: 15, width: 250}}>{chatroom.subject_number.subject_name}</Text>
-                                    <TouchableOpacity 
-                                        style={styles.chatOutButton}
-                                        onPress={() => menteeCancelMsg()}>
-                                        <Text style={{fontSize: 15, color: '#ffffff'}}>신청취소</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            ))}
-                        </View>
+                        <TouchableOpacity stlye={styles.menteeChatroomListTitle}
+                            onPress={() => handleMenteeChatroomButton()}>
+                            <Text style={{fontSize: 30}}>@멘티 채팅방</Text>
+                        </TouchableOpacity>
+                        <MenteeChatroomList />
                     </View>
                 </ScrollView>
             </View>
