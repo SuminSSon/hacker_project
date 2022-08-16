@@ -13,6 +13,6 @@ import java.util.UUID;
 @Data
 public class MemberId implements Serializable {
 
-    private UUID user_number;
-    private UUID chat_number;
+    private Integer user_number;
+    private Integer chat_number;
 }

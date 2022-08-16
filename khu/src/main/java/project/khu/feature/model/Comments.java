@@ -3,12 +3,10 @@ package project.khu.feature.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name="comments" )
@@ -23,7 +21,7 @@ public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="comments_number", nullable = false)
-    private UUID comments_number; // 댓글 번호 PK
+    private Integer comments_number; // 댓글 번호 PK
 
     @Id
     @ManyToOne

@@ -40,4 +40,6 @@ public class BoardSubject {
     public int hashCode() {
         return Objects.hash(subject_number, board_number);
     }
+
+
 }

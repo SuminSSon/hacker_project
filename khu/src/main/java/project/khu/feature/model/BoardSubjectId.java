@@ -12,6 +12,6 @@ import java.util.UUID;
 @Data
 public class BoardSubjectId implements Serializable {
 
-    private UUID subject_number;
-    private UUID board_number;
+    private Integer subject_number;
+    private Integer board_number;
 }
