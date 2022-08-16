@@ -20,7 +20,7 @@ public class SubjectInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="subject_number", nullable = false)
-    private UUID subject_number; // 과목 번호 PK
+    private Integer subject_number; // 과목 번호 PK
 
     @Column(name = "subject_name")
     private String subject_name; // 과목명
