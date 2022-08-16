@@ -86,6 +86,7 @@ public class BoardServiceImpl implements BoardService {
 
         System.out.println("======= add =======");
         for (Board board : boardEntities) {
+            if(board.getBoard_type() == BoardType.Info)
                 boardDtoList.add(this.convertBoardEntityToDto(board));
         }
 
@@ -244,13 +245,17 @@ public class BoardServiceImpl implements BoardService {
     // 7. 댓글 목록 불러오기
     @Transactional
     @Override
-    public List<CommentDto> getCommentList(Integer boardNumber) {
+    public List<CommentDto> getCommentList(Board boardNumber) {
         List<Comments> commentsEntities;
         List<CommentDto> commentDtoList = new ArrayList<>();
 
-        commentsEntities = commentRepository.findAllByBoard_number(boardNumber);
+        System.out.println("-------get Comment List--------");
+        commentsEntities = commentRepository.findAll();
         for(Comments comments : commentsEntities) {
-            commentDtoList.add(this.convertCommentEntityToDto(comments));
+            if(comments.getBoard_number() == boardNumber) {
+                System.out.println(comments);
+                commentDtoList.add(this.convertCommentEntityToDto(comments));
+            }
         }
 
         return commentDtoList;
@@ -260,9 +265,12 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Board saveComment(CommentDto commentDto) {
-        return commentRepository.save(commentDto.toEntity()).getBoard_number();
+        System.out.println("-------save Comment---------");
+        Comments comments = commentRepository.save(commentDto.toEntity());
+        System.out.println(comments);
+        System.out.println(comments.getBoard_number());
+        return comments.getBoard_number();
     }
-
 
 
 }

@@ -50,7 +50,8 @@ public interface BoardService {
 
     List<SubjectInfoDto> getSubjectList();
 
-    List<CommentDto> getCommentList(Integer boardNumber);
+    List<CommentDto> getCommentList(Board boardNumber);
 
     Board saveComment(CommentDto commentDto);
+
 }
