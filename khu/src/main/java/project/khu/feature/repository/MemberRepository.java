@@ -16,11 +16,15 @@ import java.util.List;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, MemberId> {
 
+
     @Query("select m from Member m where m.user_number = ?1")
     List<Member> findByUser_number(User user_number);
 
     @Query("select m from Member m where m.chat_number = ?1")
     List<Member> findByChat_number(Chat chat_number);
+
+    @Query("select m from Member m where m.user_number = ?1 and m.chat_number = ?2")
+    Member findByUser_numberAndChat_number(User user_number, Chat chat_number);
 
     @Transactional
     @Modifying

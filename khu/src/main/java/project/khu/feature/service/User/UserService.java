@@ -13,7 +13,7 @@ public interface UserService {
     public boolean join(User user);
 
     // 2. 유저 정보
-    public User userInfo(String user_id);
+    public User userInfo(String id);
 
     // 3. 관리자 권한 모든 유저 정보
     public List<User> allUserInfo();

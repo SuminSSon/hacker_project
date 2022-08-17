@@ -3,11 +3,9 @@ package project.khu.webapi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.khu.feature.model.User;
-import project.khu.feature.repository.UserRepository;
 import project.khu.feature.service.User.UserService;
 import project.khu.feature.service.User.mail.MailSendService;
 import project.khu.feature.service.User.config.auth.PrincipalDetails;
@@ -54,17 +52,17 @@ public class UserController {
     }
 
     @GetMapping("info")
-    public String userInfo(Model model, @RequestBody User user_id){
-        User user = userService.userInfo(user_id.getUser_id());
+    public User userInfo(Model model, @RequestParam String id){
+        User user = userService.userInfo(id);
 
         model.addAttribute("userInfo", user);
-        return "info/getUserInfo";
+        return user;
     }
 
     //이메일 인증
     @GetMapping("/authmail")
     @ResponseBody
-    public String authMailSender(@RequestBody String email) {
+    public String authMailSender(@RequestParam String email) {
         System.out.println("이메일 인증 요청이 들어옴!");
         System.out.println("이메일 인증 이메일 : " + email);
         return mailService.joinEmail(email);

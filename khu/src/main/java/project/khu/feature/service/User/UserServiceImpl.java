@@ -46,8 +46,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User userInfo(String user_id){
-        return userRepository.findByUser_id(user_id);
+    public User userInfo(String id){
+        return userRepository.findByUser_id(id);
     }
 
     @Override

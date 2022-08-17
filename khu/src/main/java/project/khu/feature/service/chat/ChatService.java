@@ -25,7 +25,7 @@ public interface ChatService {
     public Member joinChatRoom(Member member);
 
     // 5. 멘티 취소 요청
-    public void outChatRoom(Member member);
+    public boolean outChatRoom(User user, Chat chat);
 
     // 6. 채팅방 내부
     public List<ChatContent> chatRoom(Chat chat_number);

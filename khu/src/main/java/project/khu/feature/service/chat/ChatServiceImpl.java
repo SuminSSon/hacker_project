@@ -109,9 +109,12 @@ public class ChatServiceImpl implements ChatService{
 
     // 5. 멘티 취소 요청
     @Override
-    public void outChatRoom(Member member){
-        System.out.println("ChatServiceImpl.outChatRoom");
-        memberRepository.deleteByUser_numberAndChat_number(member.getUser_number(), member.getChat_number());
+    public boolean outChatRoom(User user_number, Chat chat_number){
+        if(memberRepository.findByUser_numberAndChat_number(user_number, chat_number) != null) {
+            memberRepository.deleteByUser_numberAndChat_number(user_number, chat_number);
+            return true;
+        }
+        return false;
     }
 
     // 6. 채팅방 내부
