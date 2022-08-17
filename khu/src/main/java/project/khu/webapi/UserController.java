@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.khu.feature.model.User;
 import project.khu.feature.repository.UserRepository;
@@ -40,8 +41,11 @@ public class UserController {
 
     // 어드민이 접근 가능
     @GetMapping("admin/users")
-    public List<User> users(){
-        return userService.allUserInfo();
+    public String users(Model model){
+        List<User> users = userService.allUserInfo();
+
+        model.addAttribute("users", users);
+        return "admin/allUsers";
     }
 
     @PostMapping("join")
@@ -50,14 +54,17 @@ public class UserController {
     }
 
     @GetMapping("info")
-    public User userInfo(@RequestBody User user_number){
-        return userService.userInfo(user_number.getUser_number());
+    public String userInfo(Model model, @RequestBody User user_id){
+        User user = userService.userInfo(user_id.getUser_id());
+
+        model.addAttribute("userInfo", user);
+        return "info/getUserInfo";
     }
 
     //이메일 인증
     @GetMapping("/authmail")
     @ResponseBody
-    public String authMailSender(String email) {
+    public String authMailSender(@RequestBody String email) {
         System.out.println("이메일 인증 요청이 들어옴!");
         System.out.println("이메일 인증 이메일 : " + email);
         return mailService.joinEmail(email);

@@ -11,7 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import project.khu.feature.service.User.config.auth.PrincipalDetails;
-import project.khu.feature.service.User.dto.LoginRequestDto;
+import project.khu.feature.dto.LoginRequestDto;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 유저네임패스워드 토큰 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(
-                        loginRequestDto.getUser_name(),
+                        loginRequestDto.getUser_id(),
                         loginRequestDto.getUser_password());
 
         System.out.println("JwtAuthenticationFilter : 토큰생성완료");
@@ -65,7 +65,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 authenticationManager.authenticate(authenticationToken);
 
         PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-        System.out.println("Authentication : " + principalDetails.getUser().getUser_name());
+        System.out.println("Authentication : " + principalDetails.getUser().getUser_id());
         return authentication;
     }
 

@@ -62,7 +62,7 @@ public class BoardController {
     // 1-2. 특정 과목게시판 게시글 목록 불러오기 (*) #12
     // ex) [객체지향] [1] 9/23일 과제 질문 [2] ...
     @GetMapping({"/subject/post/list"})
-    public String boardSubjectList(Model model, @RequestParam("subjectNumber") SubjectInfo subjectNumber) {
+    public String boardSubjectList(Model model, @RequestBody SubjectInfo subjectNumber) {
         List<BoardDto> boardSubjectList = boardService.getBoardSubjectList(subjectNumber);
 
         System.out.println(boardSubjectList);

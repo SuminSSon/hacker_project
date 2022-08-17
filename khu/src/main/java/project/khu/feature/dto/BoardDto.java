@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor
-public class BoardDto {
+public class    BoardDto {
     private User user_number;       // 유저 번호 == 작성자
     private Integer board_number;   // 게시판 글번호 PK
     private BoardType board_type;     // 게시판 유형

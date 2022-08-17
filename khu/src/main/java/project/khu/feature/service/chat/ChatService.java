@@ -3,6 +3,7 @@ package project.khu.feature.service.chat;
 
 import org.springframework.stereotype.Service;
 import project.khu.feature.model.Chat;
+import project.khu.feature.model.ChatContent;
 import project.khu.feature.model.Member;
 import project.khu.feature.model.User;
 
@@ -22,4 +23,14 @@ public interface ChatService {
 
     // 4. 멘티 신청 요청
     public Member joinChatRoom(Member member);
+
+    // 5. 멘티 취소 요청
+    public void outChatRoom(Member member);
+
+    // 6. 채팅방 내부
+    public List<ChatContent> chatRoom(Chat chat_number);
+
+    // 7. 채팅방 참가자 리스트 조회
+    public List<String> memberList(Chat chat_number);
+
 }

@@ -1,7 +1,6 @@
 package project.khu.feature.service.board;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.khu.feature.dto.BoardDto;
@@ -11,11 +10,10 @@ import project.khu.feature.dto.SubjectInfoDto;
 import project.khu.feature.model.*;
 import project.khu.feature.repository.BoardRepository;
 import project.khu.feature.repository.BoardSubjectRepository;
-import project.khu.feature.repository.CommentRepository;
+import project.khu.feature.repository.CommentsRepository;
 import project.khu.feature.repository.SubjectInfoRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -25,7 +23,7 @@ public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final BoardSubjectRepository boardSubjectRepository;
-    private final CommentRepository commentRepository;
+    private final CommentsRepository commentRepository;
     private final SubjectInfoRepository subjectInfoRepository;
 
     /* Entity -> Dto 로 변환 */

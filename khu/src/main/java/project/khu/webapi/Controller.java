@@ -4,6 +4,7 @@ import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.multipart.PartHttpMessageWriter;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 import project.khu.feature.model.*;
 import project.khu.feature.repository.*;
@@ -31,6 +32,8 @@ public class Controller {
     private ChatRepository chatRepository;
     @Autowired
     private MemberRepository memberRepository;
+    @Autowired
+    private ChatContentRepository chatContentRepository;
 
 
 //    @PostMapping(path="/user/add")
@@ -50,7 +53,7 @@ public class Controller {
 //    }
 
     @PostMapping(path="/subject/info/add")
-    public String addSubjectInfo (@RequestParam String subject_name, @RequestParam String subject_professor) {
+    public String addSubjectInfo1 (@RequestParam String subject_name, @RequestParam String subject_professor) {
         SubjectInfo s = new SubjectInfo();
         s.setSubject_name(subject_name);
         s.setSubject_professor(subject_professor);
@@ -60,7 +63,7 @@ public class Controller {
     }
 
     @PostMapping(path="/board/subject/add")
-    public String addNewBoard (@RequestParam String title, @RequestParam String content, @RequestParam User userNumber) {
+    public String addNewBoard1 (@RequestParam String title, @RequestParam String content, @RequestParam User userNumber) {
         Board b = new Board();
         b.setBoard_type(BoardType.Subject);
         b.setBoard_title(title);
@@ -72,7 +75,7 @@ public class Controller {
     }
 
     @PostMapping(path="/boardSubject/add")
-    public String addNewSubjectBoard (@RequestParam SubjectInfo subject_number, @RequestParam Board board_number) {
+    public String addNewSubjectBoard1 (@RequestParam SubjectInfo subject_number, @RequestParam Board board_number) {
         BoardSubject b = new BoardSubject();
         b.setSubject_number(subject_number);
         b.setBoard_number(board_number);
@@ -82,13 +85,13 @@ public class Controller {
     }
 
     @GetMapping(path="/board/all")
-    public List<Board> getAllBoard() {
+    public List<Board> getAllBoard1() {
         return boardRepository.findAll();
     }
 
 
     @PostMapping(path="/comments/add")
-    public String addNewComments (@RequestParam Board board_number, @RequestParam Integer comments_writer, @RequestParam User user_number, @RequestParam String comments_content) {
+    public String addNewComments1 (@RequestParam Board board_number, @RequestParam Integer comments_writer, @RequestParam User user_number, @RequestParam String comments_content) {
         Comments c = new Comments();
         c.setBoard_number(board_number);
         c.setComments_content(comments_content);
@@ -99,12 +102,12 @@ public class Controller {
     }
 
     @GetMapping(path="/comments/all")
-    public List<Comments> getAllComments() {
+    public List<Comments> getAllComments1() {
         return commentsRepository.findAll();
     }
 
     @PostMapping(path="/chat/add")
-    public String chatAdd(@RequestParam Integer chat_max, @RequestParam Integer chat_mentee, @RequestParam SubjectInfo subject_number, @RequestParam String  user_tag){
+    public String chatAdd1(@RequestParam Integer chat_max, @RequestParam Integer chat_mentee, @RequestParam SubjectInfo subject_number, @RequestParam String  user_tag){
         Chat c = new Chat();
         c.setChat_max(chat_max);
         c.setChat_mentee(chat_mentee);
@@ -116,7 +119,7 @@ public class Controller {
     }
 
     @PostMapping(path="/chat/member/join")
-    public String chatMemberAdd(@RequestParam User user_number, @RequestParam Chat chat_number, @RequestParam boolean chat_mentee){
+    public String chatMemberAdd1(@RequestParam User user_number, @RequestParam Chat chat_number, @RequestParam boolean chat_mentee){
         Member m = new Member();
         m.setUser_number(user_number);
         m.setChat_number(chat_number);
@@ -125,6 +128,17 @@ public class Controller {
 
         return "Save Chat member join";
     }
+
+//    @PostMapping(path="/chat/content/add")
+//    public String chatContentAdd1(@RequestParam User user_number, @RequestParam String chat_content, @RequestParam Chat chat_number){
+//        ChatContent c = new ChatContent();
+//        c.setUser_number(user_number);
+//        c.setChat_content(chat_content);
+//        c.setChat_number(chat_number);
+//        chatContentRepository.save(c);
+//
+//        return "Save chat content add";
+//    }
 
 
         //@SneakyThrows
