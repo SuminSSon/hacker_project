@@ -190,11 +190,11 @@ public class BoardController {
     // 6. [과목게시판] 과목 목록 불러오기 (*)(*) #11
     //    ex) 객프, 자료구조, 이산구조, 컴퓨터구조,,,,
     @GetMapping("/subject/list")
-    public String subjectList(Model model) {
+    public List<SubjectInfoDto> subjectList(Model model) {
         List<SubjectInfoDto> subjectList = boardService.getSubjectList();
 
         model.addAttribute("subjectList", subjectList);
-        return "board/subjectList";
+        return subjectList;
     }
 
     /* comment */
