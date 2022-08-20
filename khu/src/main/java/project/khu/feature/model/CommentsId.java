@@ -13,6 +13,6 @@ import java.util.UUID;
 @Data
 public class CommentsId implements Serializable {
 
-    private UUID comments_number;
-    private UUID board_number;
+    private Integer comments_number;
+    private Integer board_number;
 }

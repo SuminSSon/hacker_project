@@ -14,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@IdClass(ChatContentId.class)
+@IdClass(ChatContentsId.class)
 public class ChatContent {
 
     @Id

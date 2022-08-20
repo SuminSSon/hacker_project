@@ -34,10 +34,22 @@ public class ChatServiceImpl implements ChatService{
     // 1. 과목명 + 교수명으로 채팅방 목록 조회
     @Override
     public List<Chat> searchChatRooms(String subject_name, String subject_professor){
+<<<<<<< HEAD
         SubjectInfo temp = subjectInfoRepository.findBySubject_nameAndSubject_professor(subject_name, subject_professor);
 
         List<Chat> chatRooms = new ArrayList<>();
         chatRooms = chatRepository.findAllBySubject_number(temp);
+=======
+        System.out.println("ChatServiceImpl.searchChatRooms");
+        System.out.println(subject_name + " " + subject_professor);
+
+        SubjectInfo temp = subjectInfoRepository.findBySubject_nameAndSubject_professor(subject_name, subject_professor);
+        System.out.println("temp = " + temp);
+
+        List<Chat> chatRooms = new ArrayList<>();
+        chatRooms = chatRepository.findAllBySubject_number(temp);
+        System.out.println("chatRoom = " + chatRooms);
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
 
         return chatRooms;
     }
@@ -45,6 +57,7 @@ public class ChatServiceImpl implements ChatService{
     // 2. 유저가 속한 채팅방 목록 조회
     @Override
     public List<Chat> userChatRooms(User user_number){
+<<<<<<< HEAD
         List<Member> Members = memberRepository.findByUser_number(user_number);
 
         List<Chat> chatRooms = new ArrayList<>();
@@ -52,6 +65,21 @@ public class ChatServiceImpl implements ChatService{
             chatRooms.add(member.getChat_number());
         }
 
+=======
+        System.out.println("ChatServiceImpl.userChatRooms");
+        System.out.println("user_number = " + user_number);
+
+        List<Member> Members = memberRepository.findByUser_number(user_number);
+        System.out.println("Members = " + Members);
+
+        List<Chat> chatRooms = new ArrayList<>();
+        for(Member member : Members){
+//            System.out.println("member = " + member);
+//            System.out.println(member.getChat_number());
+            chatRooms.add(member.getChat_number());
+//            System.out.println(memberRepository.findByChat_number(member.getChat_number()));
+        }
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return chatRooms;
     }
 
@@ -59,6 +87,11 @@ public class ChatServiceImpl implements ChatService{
     // 3. 멘토 등록(채팅방 생성) 요청
     @Override
     public Chat createChatRoom(Chat chat){
+<<<<<<< HEAD
+=======
+        System.out.println("ChatServiceImpl.createChatRoom");
+
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         Chat c = new Chat();
         c.setChat_max(chat.getChat_max());
         c.setChat_mentee(chat.getChat_mentee());
@@ -78,6 +111,10 @@ public class ChatServiceImpl implements ChatService{
             return null;
         }
         else {
+<<<<<<< HEAD
+=======
+            System.out.println("member = " + member);
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
             Member m = new Member();
             m.setUser_number(member.getUser_number());
             m.setChat_number(member.getChat_number());
@@ -87,6 +124,10 @@ public class ChatServiceImpl implements ChatService{
             Integer chat_mentee = byChat_number.getChat_mentee();
             chat_mentee++;
             byChat_number.setChat_mentee(chat_mentee);
+<<<<<<< HEAD
+=======
+            System.out.println(byChat_number.getChat_mentee());
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
             chatRepository.save(byChat_number);
             return m;
         }
@@ -97,8 +138,11 @@ public class ChatServiceImpl implements ChatService{
     public boolean outChatRoom(User user_number, Chat chat_number){
         if(memberRepository.findByUser_numberAndChat_number(user_number, chat_number) != null) {
             memberRepository.deleteByUser_numberAndChat_number(user_number, chat_number);
+<<<<<<< HEAD
             chat_number.setChat_mentee(chat_number.getChat_mentee() - 1);
             chatRepository.save(chat_number);
+=======
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
             return true;
         }
         return false;

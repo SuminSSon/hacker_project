@@ -38,13 +38,26 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+<<<<<<< HEAD
     // 2. 유저 정보
+=======
+    // 2. 로그인
+    public String login(User user){
+        System.out.println(userRepository.findByUser_idAndUser_password(user.getUser_id(), bCryptPasswordEncoder.encode(user.getUser_password())));
+
+        return "login 구현 실패";
+    }
+
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     @Override
     public User userInfo(String id){
         return userRepository.findByUser_id(id);
     }
 
+<<<<<<< HEAD
     // 3. 관리자 권한 모든 유저 정보
+=======
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     @Override
     public List<User> allUserInfo(){
         return userRepository.findAll();

@@ -28,7 +28,11 @@ public class ChatController {
         List<Chat> chatRooms = chatService.searchChatRooms(subjectName, subjectProfessor);
 
         model.addAttribute("chatSearch", chatRooms);
+<<<<<<< HEAD
 
+=======
+        //System.out.println(chatRooms);
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return chatRooms;
     }
 
@@ -38,34 +42,60 @@ public class ChatController {
         List<Chat> chatRooms = chatService.userChatRooms(userNumber);
 
         model.addAttribute("chatUser", chatRooms);
+<<<<<<< HEAD
 
+=======
+        //System.out.println(chatRooms);
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return chatRooms;
     }
 
     // 3. 멘토 등록(채팅방 생성) 요청
     @PostMapping("chat/create")
+<<<<<<< HEAD
     public Chat chatCreate(Model model, @RequestBody Chat chat){
         Chat c = chatService.createChatRoom(chat);
 
         model.addAttribute("chatCreate", c);
 
         return c;
+=======
+    public String chatCreate(Model model, @RequestParam Chat chat){
+        System.out.println("ChatController.chatCreate");
+        Chat c = chatService.createChatRoom(chat);
+
+        model.addAttribute("chatCreate", c);
+        return "chat/createChatRoom";
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     }
 
     // 4. 멘티 신청 요청
     @PostMapping("chat/join")
+<<<<<<< HEAD
     public boolean chatJoin(Model model, @RequestBody Member member){
+=======
+    public String chatJoin(Model model, @RequestBody Member member){
+        System.out.println("ChatController.chatJoin");
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         Member m = chatService.joinChatRoom(member);
 
         model.addAttribute("chatJoin", m);
 
+<<<<<<< HEAD
         return true;
+=======
+        return "chat/memberJoinChat";
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     }
 
     // 5. 멘티 취소 요청
     // 없는 user, chat이면 false 반환
     @GetMapping("chat/out")
     public boolean chatOut(@RequestParam User userNumber, @RequestParam Chat chatNumber){
+<<<<<<< HEAD
+=======
+        System.out.println("ChatController.chatOut");
+>>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         boolean b = chatService.outChatRoom(userNumber, chatNumber);
 
         return b;

@@ -4,8 +4,21 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.security.Key;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+
+//@Entity
+//@Table(name="chat")
+//@NoArgsConstructor
+//@Getter
+//@Setter
+//@RequiredArgsConstructor
+//@Builder
+//@AllArgsConstructor
+//@ToString(callSuper = true)
 
 @Entity
 @Table(name="chat" )
@@ -19,7 +32,7 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="chat_number", nullable = false)
-    private UUID chat_number; // 채팅방 번호 PK
+    private Integer chat_number; // 채팅방 번호 PK
 
     @Column(name = "chat_max")
     private Integer chat_max; // 최대 인원수
@@ -32,7 +45,9 @@ public class Chat {
     private SubjectInfo subject_number; // 과목 번호 FK
 
     @Column(name = "user_tag")
-    private String user_tag; // 신청 멘티수
+    private String user_tag; // 어필 태그
+    // 고민 좀
+
 
     @Override
     public boolean equals(Object o) {
