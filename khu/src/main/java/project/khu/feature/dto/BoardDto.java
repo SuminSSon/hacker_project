@@ -6,7 +6,9 @@ package project.khu.feature.dto;
 // DB 로부터 데이터를 얻어 Service, Controller 등으로 보낼 때 사용
 // 별도의 Logic 을 갖지 않고, 순수 getter, setter 메서드만 가짐
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import project.khu.feature.model.Board;
 import project.khu.feature.model.BoardType;
@@ -14,7 +16,6 @@ import project.khu.feature.model.User;
 import project.khu.feature.repository.BoardRepository;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @NoArgsConstructor

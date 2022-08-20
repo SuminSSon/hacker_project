@@ -71,28 +71,18 @@ public class BoardServiceImpl implements BoardService {
 
     /* 기능 */
 
-<<<<<<< HEAD
     // 1-1. 자료게시판 게시글 목록 불러오기 (*)
-=======
-    // 1-1. 자료게시판 게시글 목록 불러오기
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     // 생성된 날짜(board_date) 기준으로 오름차순(ASC) 정렬 (내림차순: DESC)
     @Transactional
     @Override
     public List<BoardDto> getBoardList() {
-<<<<<<< HEAD
-=======
         System.out.println("----------getBoardList In-----------");
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         List<Board> boardEntities;
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         boardEntities = boardRepository.findAll();
 
-<<<<<<< HEAD
-=======
         System.out.println("======= add =======");
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         for (Board board : boardEntities) {
             if(board.getBoard_type() == BoardType.Info)
                 boardDtoList.add(this.convertBoardEntityToDto(board));
@@ -105,19 +95,16 @@ public class BoardServiceImpl implements BoardService {
     // 내림차순 정렬 필요!!!!!!
     @Transactional
     @Override
-<<<<<<< HEAD
     public List<BoardDto> getBoardSubjectList(String subjectName) {
         List<SubjectInfo> subjectInfoList;
         List<BoardSubject> b;
-=======
-    public List<BoardDto> getBoardSubjectList(SubjectInfo subjectNumber) {
-        List<BoardSubject> boardSubjectList;
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         List<Board> boardNumberEntities = new ArrayList<>();
         List<BoardDto> boardDtoList = new ArrayList<>();
 
 
-<<<<<<< HEAD
+        System.out.println("--------getBoardSubjectList in------------");
+        System.out.println(subjectName);
+
         subjectInfoList =  subjectInfoRepository.findAllBySubject_name(subjectName);
 
         for(SubjectInfo subjectInfo: subjectInfoList) {
@@ -133,26 +120,8 @@ public class BoardServiceImpl implements BoardService {
             boardDtoList.add(this.convertBoardEntityToDto(board));
         }
 
-=======
-        System.out.println("--------getBoardSubjectList in------------");
-        System.out.println(subjectNumber);
-        boardSubjectList = boardSubjectRepository.findAll();
+        System.out.println(boardDtoList);
 
-        for(BoardSubject boardSubject: boardSubjectList) {
-            if(boardSubject.getSubject_number() == subjectNumber) {
-                boardNumberEntities.add(boardSubject.getBoard_number());
-            }
-        }
-
-        System.out.println("=======board Repo 에 저장=======");
-        for(Board bo : boardNumberEntities) {
-            Board board = boardRepository.findByBoard_number(bo.getBoard_number());
-            boardDtoList.add(this.convertBoardEntityToDto(board));
-        }
-
-        // ArrayList createdDate 를 기준으로 내림차순 정렬하기
-
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return boardDtoList;
     }
 
@@ -174,13 +143,7 @@ public class BoardServiceImpl implements BoardService {
     @Override
     // PK인 board_number 가 integer 타입
     // if( subjectNumber == NULL ) -> 정보게시판
-<<<<<<< HEAD
     public boolean saveInfoPost(BoardDto boardDto) {
-        Board board = boardRepository.save(boardDto.toEntity());
-
-        return true;
-=======
-    public Integer saveInfoPost(BoardDto boardDto) {
 
         System.out.println("---------Save Post boardDto---------");
         System.out.println(boardDto);
@@ -189,8 +152,7 @@ public class BoardServiceImpl implements BoardService {
         Board board = boardRepository.save(boardDto.toEntity());
         System.out.println(board);
 
-        return board.getBoard_number();
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
+        return true;
     }
 
     // 3-2. [과목게시판] 게시글 boardRepo 에 저장하기
@@ -198,33 +160,19 @@ public class BoardServiceImpl implements BoardService {
     @Override
     // PK인 board_number 가 integer 타입
     // if( subjectNumber == NULL ) -> 정보게시판
-<<<<<<< HEAD
     public boolean saveSubjectPost(BoardDto boardDto, SubjectInfo subjectInfo) {
-=======
-    public Integer saveSubjectPost(BoardDto boardDto, SubjectInfo subjectInfo) {
 
-//        System.out.println("---------Save Subject Post---------");
-//        System.out.println(boardDto);
-//        System.out.println(subjectInfo);
-
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         Board board = boardRepository.save(boardDto.toEntity());
 
         BoardSubjectDto boardSubjectDto = BoardSubjectDto.builder()
                 .subjectNumber(subjectInfo)
                 .boardNumber(board)
                 .build();
-<<<<<<< HEAD
 
         boardSubjectRepository.save(boardSubjectDto.toEntity());
+        System.out.println("---save Clear------");
 
         return true;
-=======
-//        System.out.println("-----boardSubjectDto--------");
-        boardSubjectRepository.save(boardSubjectDto.toEntity());
-
-        return board.getBoard_number();
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
     }
 
     // 4. 과목 정보 저장하기
@@ -232,8 +180,6 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Integer saveSubjectInfo(SubjectInfoDto subjectInfoDto) {
-<<<<<<< HEAD
-=======
 //        System.out.println("in");
 //        System.out.println(subjectInfoDto);
 //        System.out.println(subjectInfoDto.toEntity());
@@ -241,7 +187,6 @@ public class BoardServiceImpl implements BoardService {
 //        System.out.println(subjectInfoRepository.save(subjectInfoDto.toEntity()).getSubject_number());
 //        System.out.println("-------------------------------------------");
 
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return subjectInfoRepository.save(subjectInfoDto.toEntity()).getSubject_number();
     }
 
@@ -252,13 +197,10 @@ public class BoardServiceImpl implements BoardService {
         SubjectInfo subjectInfo = subjectInfoRepository.findBySubject_number(subjectNumber);
 
         SubjectInfoDto subjectInfoDto = this.convertSubjectInfoEntityToDto(subjectInfo);
-<<<<<<< HEAD
-=======
         System.out.println("---------Subject Info----------");
         System.out.println(subjectInfoDto.getSubject_number());
         System.out.println(subjectInfoDto.getSubject_name());
         System.out.println(subjectInfoDto.getSubject_professor());
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
 
         return subjectInfoDto;
     }
@@ -273,15 +215,10 @@ public class BoardServiceImpl implements BoardService {
         List<SubjectInfoDto> SubjectInfoDtoList = new ArrayList<>();
 
         subjectInfoEntities = subjectInfoRepository.findAll();  // Sort.by(Sort.Direction.ASC, "subject_name")
-<<<<<<< HEAD
-        for(SubjectInfo subjectInfo : subjectInfoEntities) {
-            SubjectInfoDtoList.add(this.convertSubjectInfoEntityToDto(subjectInfo));
-=======
         System.out.println("--------------SUBJECT LIST----------------");
         for(SubjectInfo subjectInfo : subjectInfoEntities) {
             SubjectInfoDtoList.add(this.convertSubjectInfoEntityToDto(subjectInfo));
             System.out.println(this.convertSubjectInfoEntityToDto(subjectInfo));
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         }
 
         return SubjectInfoDtoList;
@@ -310,17 +247,11 @@ public class BoardServiceImpl implements BoardService {
         List<Comments> commentsEntities;
         List<CommentDto> commentDtoList = new ArrayList<>();
 
-<<<<<<< HEAD
-        commentsEntities = commentRepository.findAll();
-        for(Comments comments : commentsEntities) {
-            if(comments.getBoard_number() == boardNumber) {
-=======
         System.out.println("-------get Comment List--------");
         commentsEntities = commentRepository.findAll();
         for(Comments comments : commentsEntities) {
             if(comments.getBoard_number() == boardNumber) {
                 System.out.println(comments);
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
                 commentDtoList.add(this.convertCommentEntityToDto(comments));
             }
         }
@@ -332,15 +263,10 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Board saveComment(CommentDto commentDto) {
-<<<<<<< HEAD
-        Comments comments = commentRepository.save(commentDto.toEntity());
-
-=======
         System.out.println("-------save Comment---------");
         Comments comments = commentRepository.save(commentDto.toEntity());
         System.out.println(comments);
         System.out.println(comments.getBoard_number());
->>>>>>> 68aa8336f70de0f3d5f37f6c31685a1989140e79
         return comments.getBoard_number();
     }
 

@@ -17,4 +17,7 @@ public interface SubjectInfoRepository extends JpaRepository<SubjectInfo, Intege
     @Query("select s from SubjectInfo s where s.subject_name = ?1 and s.subject_professor = ?2")
     SubjectInfo findBySubject_nameAndSubject_professor(String subject_name, String subject_professor);
 
+
+    @Query("select s from SubjectInfo s where s.subject_name = ?1")
+    List<SubjectInfo> findAllBySubject_name(String subjectName);
 }

@@ -22,7 +22,7 @@ public class BoardSubjectDto{
         return boardSubject;
     }
 
-    // Entity -> Dto
+    // Dto 생성
     @Builder
     public BoardSubjectDto(SubjectInfo subjectNumber, Board boardNumber) {
         this.subject_number = subjectNumber;

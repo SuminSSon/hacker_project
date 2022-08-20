@@ -8,8 +8,8 @@ import project.khu.feature.model.Board;
 import project.khu.feature.model.BoardType;
 import project.khu.feature.model.Comments;
 import project.khu.feature.model.User;
+
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
