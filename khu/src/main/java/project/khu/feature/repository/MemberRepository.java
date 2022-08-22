@@ -30,7 +30,4 @@ public interface MemberRepository extends JpaRepository<Member, MemberId> {
     @Modifying
     @Query("delete from Member m where m.user_number = ?1 and m.chat_number = ?2")
     void deleteByUser_numberAndChat_number(User user_number, Chat chat_number);
-
-    @Query("select m from Member m where m.chat_mentee = ?1")
-    Member findByChat_mentee(boolean chat_mentee);
 }

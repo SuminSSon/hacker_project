@@ -76,11 +76,13 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public List<BoardDto> getBoardList() {
+        System.out.println("----------getBoardList In-----------");
         List<Board> boardEntities;
         List<BoardDto> boardDtoList = new ArrayList<>();
 
         boardEntities = boardRepository.findAll();
 
+        System.out.println("======= add =======");
         for (Board board : boardEntities) {
             if(board.getBoard_type() == BoardType.Info)
                 boardDtoList.add(this.convertBoardEntityToDto(board));
@@ -100,6 +102,9 @@ public class BoardServiceImpl implements BoardService {
         List<BoardDto> boardDtoList = new ArrayList<>();
 
 
+        System.out.println("--------getBoardSubjectList in------------");
+        System.out.println(subjectName);
+
         subjectInfoList =  subjectInfoRepository.findAllBySubject_name(subjectName);
 
         for(SubjectInfo subjectInfo: subjectInfoList) {
@@ -114,6 +119,8 @@ public class BoardServiceImpl implements BoardService {
         for(Board board: boardNumberEntities) {
             boardDtoList.add(this.convertBoardEntityToDto(board));
         }
+
+        System.out.println(boardDtoList);
 
         return boardDtoList;
     }
@@ -137,7 +144,13 @@ public class BoardServiceImpl implements BoardService {
     // PK인 board_number 가 integer 타입
     // if( subjectNumber == NULL ) -> 정보게시판
     public boolean saveInfoPost(BoardDto boardDto) {
+
+        System.out.println("---------Save Post boardDto---------");
+        System.out.println(boardDto);
+
+        System.out.println("-------------boardEntity-----------");
         Board board = boardRepository.save(boardDto.toEntity());
+        System.out.println(board);
 
         return true;
     }
@@ -148,6 +161,7 @@ public class BoardServiceImpl implements BoardService {
     // PK인 board_number 가 integer 타입
     // if( subjectNumber == NULL ) -> 정보게시판
     public boolean saveSubjectPost(BoardDto boardDto, SubjectInfo subjectInfo) {
+
         Board board = boardRepository.save(boardDto.toEntity());
 
         BoardSubjectDto boardSubjectDto = BoardSubjectDto.builder()
@@ -156,6 +170,7 @@ public class BoardServiceImpl implements BoardService {
                 .build();
 
         boardSubjectRepository.save(boardSubjectDto.toEntity());
+        System.out.println("---save Clear------");
 
         return true;
     }
@@ -165,6 +180,13 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Integer saveSubjectInfo(SubjectInfoDto subjectInfoDto) {
+//        System.out.println("in");
+//        System.out.println(subjectInfoDto);
+//        System.out.println(subjectInfoDto.toEntity());
+//        System.out.println("----------------------------------------------");
+//        System.out.println(subjectInfoRepository.save(subjectInfoDto.toEntity()).getSubject_number());
+//        System.out.println("-------------------------------------------");
+
         return subjectInfoRepository.save(subjectInfoDto.toEntity()).getSubject_number();
     }
 
@@ -175,6 +197,10 @@ public class BoardServiceImpl implements BoardService {
         SubjectInfo subjectInfo = subjectInfoRepository.findBySubject_number(subjectNumber);
 
         SubjectInfoDto subjectInfoDto = this.convertSubjectInfoEntityToDto(subjectInfo);
+        System.out.println("---------Subject Info----------");
+        System.out.println(subjectInfoDto.getSubject_number());
+        System.out.println(subjectInfoDto.getSubject_name());
+        System.out.println(subjectInfoDto.getSubject_professor());
 
         return subjectInfoDto;
     }
@@ -189,8 +215,10 @@ public class BoardServiceImpl implements BoardService {
         List<SubjectInfoDto> SubjectInfoDtoList = new ArrayList<>();
 
         subjectInfoEntities = subjectInfoRepository.findAll();  // Sort.by(Sort.Direction.ASC, "subject_name")
+        System.out.println("--------------SUBJECT LIST----------------");
         for(SubjectInfo subjectInfo : subjectInfoEntities) {
             SubjectInfoDtoList.add(this.convertSubjectInfoEntityToDto(subjectInfo));
+            System.out.println(this.convertSubjectInfoEntityToDto(subjectInfo));
         }
 
         return SubjectInfoDtoList;
@@ -219,9 +247,11 @@ public class BoardServiceImpl implements BoardService {
         List<Comments> commentsEntities;
         List<CommentDto> commentDtoList = new ArrayList<>();
 
+        System.out.println("-------get Comment List--------");
         commentsEntities = commentRepository.findAll();
         for(Comments comments : commentsEntities) {
             if(comments.getBoard_number() == boardNumber) {
+                System.out.println(comments);
                 commentDtoList.add(this.convertCommentEntityToDto(comments));
             }
         }
@@ -233,8 +263,10 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public Board saveComment(CommentDto commentDto) {
+        System.out.println("-------save Comment---------");
         Comments comments = commentRepository.save(commentDto.toEntity());
-
+        System.out.println(comments);
+        System.out.println(comments.getBoard_number());
         return comments.getBoard_number();
     }
 

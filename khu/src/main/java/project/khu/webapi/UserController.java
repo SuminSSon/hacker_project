@@ -53,11 +53,10 @@ public class UserController {
 
     @GetMapping("info")
     public User userInfo(Model model, @RequestParam String id){
-        User u = userService.userInfo(id);
+        User user = userService.userInfo(id);
 
-        System.out.println("user = " + u);
-        model.addAttribute("userInfo", u);
-        return u;
+        model.addAttribute("userInfo", user);
+        return user;
     }
 
     //이메일 인증

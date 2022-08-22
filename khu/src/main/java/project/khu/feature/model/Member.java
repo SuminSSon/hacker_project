@@ -30,7 +30,7 @@ public class Member {
     private Chat chat_number; // 채팅방 번호 FK, PK
 
     @Column(name = "mentor_check")
-    private boolean chat_mentee; // 멘티 여부, 멘토면 false
+    private boolean mentor_check; // 멘토 여부
 
     @Column(name = "last_check_time")
     @CreationTimestamp

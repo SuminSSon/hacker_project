@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
@@ -29,3 +30,4 @@ public class BoardSubjectId implements Serializable {
         return Objects.hash(subject_number, board_number);
     }
 }
+

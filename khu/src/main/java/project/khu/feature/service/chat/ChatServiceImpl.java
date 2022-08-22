@@ -34,10 +34,15 @@ public class ChatServiceImpl implements ChatService{
     // 1. 과목명 + 교수명으로 채팅방 목록 조회
     @Override
     public List<Chat> searchChatRooms(String subject_name, String subject_professor){
+        System.out.println("ChatServiceImpl.searchChatRooms");
+        System.out.println(subject_name + " " + subject_professor);
+
         SubjectInfo temp = subjectInfoRepository.findBySubject_nameAndSubject_professor(subject_name, subject_professor);
+        System.out.println("temp = " + temp);
 
         List<Chat> chatRooms = new ArrayList<>();
         chatRooms = chatRepository.findAllBySubject_number(temp);
+        System.out.println("chatRoom = " + chatRooms);
 
         return chatRooms;
     }
@@ -45,13 +50,19 @@ public class ChatServiceImpl implements ChatService{
     // 2. 유저가 속한 채팅방 목록 조회
     @Override
     public List<Chat> userChatRooms(User user_number){
+        System.out.println("ChatServiceImpl.userChatRooms");
+        System.out.println("user_number = " + user_number);
+
         List<Member> Members = memberRepository.findByUser_number(user_number);
+        System.out.println("Members = " + Members);
 
         List<Chat> chatRooms = new ArrayList<>();
         for(Member member : Members){
+//            System.out.println("member = " + member);
+//            System.out.println(member.getChat_number());
             chatRooms.add(member.getChat_number());
+//            System.out.println(memberRepository.findByChat_number(member.getChat_number()));
         }
-
         return chatRooms;
     }
 
@@ -59,6 +70,8 @@ public class ChatServiceImpl implements ChatService{
     // 3. 멘토 등록(채팅방 생성) 요청
     @Override
     public Chat createChatRoom(Chat chat){
+        System.out.println("ChatServiceImpl.createChatRoom");
+
         Chat c = new Chat();
         c.setChat_max(chat.getChat_max());
         c.setChat_mentee(chat.getChat_mentee());
@@ -78,15 +91,17 @@ public class ChatServiceImpl implements ChatService{
             return null;
         }
         else {
+            System.out.println("member = " + member);
             Member m = new Member();
             m.setUser_number(member.getUser_number());
             m.setChat_number(member.getChat_number());
-            m.setChat_mentee(member.isChat_mentee());
+            m.setMentor_check(member.isMentor_check());
             memberRepository.save(m);
 
             Integer chat_mentee = byChat_number.getChat_mentee();
             chat_mentee++;
             byChat_number.setChat_mentee(chat_mentee);
+            System.out.println(byChat_number.getChat_mentee());
             chatRepository.save(byChat_number);
             return m;
         }
@@ -114,12 +129,12 @@ public class ChatServiceImpl implements ChatService{
 
     // 7. 채팅방 참가자 리스트 조회
     @Override
-    public List<String> memberList(Chat chat_number){
+    public List<Member> memberList(Chat chat_number){
         List<Member> byChat_number = memberRepository.findByChat_number(chat_number);
-        List<String> memberList = new ArrayList<>();
+        List<Member> memberList = new ArrayList<>();
 
         for(Member member : byChat_number){
-            memberList.add(member.getUser_number().getUser_name());
+            memberList.add(member);
         }
 
         return memberList;
@@ -127,15 +142,30 @@ public class ChatServiceImpl implements ChatService{
 
     // 8. 멘토 추천 수 조회
     @Override
-    public User memtorRecom(Chat chat_number){
+    public User mentorRecom(Chat chat_number) {
         List<Member> byChat_number = memberRepository.findByChat_number(chat_number);
 
         for (Member member : byChat_number){
-            if(!memberRepository.findByChat_mentee(member.isChat_mentee()).isChat_mentee()) {
+            if(member.isMentor_check()) {
                 return member.getUser_number();
             }
         }
 
         return null;
     }
+
+    // 8. 멘토 추천 수 조회
+    @Override
+    public User memtorRecom(Chat chat_number) {
+        List<Member> byChat_number = memberRepository.findByChat_number(chat_number);
+
+        for (Member member : byChat_number){
+            if(member.isMentor_check()) {
+                return member.getUser_number();
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -28,7 +28,7 @@ public class ChatController {
         List<Chat> chatRooms = chatService.searchChatRooms(subjectName, subjectProfessor);
 
         model.addAttribute("chatSearch", chatRooms);
-
+        //System.out.println(chatRooms);
         return chatRooms;
     }
 
@@ -38,35 +38,36 @@ public class ChatController {
         List<Chat> chatRooms = chatService.userChatRooms(userNumber);
 
         model.addAttribute("chatUser", chatRooms);
-
+        //System.out.println(chatRooms);
         return chatRooms;
     }
 
     // 3. 멘토 등록(채팅방 생성) 요청
     @PostMapping("chat/create")
     public Chat chatCreate(Model model, @RequestBody Chat chat){
+        System.out.println("ChatController.chatCreate");
         Chat c = chatService.createChatRoom(chat);
 
         model.addAttribute("chatCreate", c);
-
         return c;
     }
 
     // 4. 멘티 신청 요청
     @PostMapping("chat/join")
-    public boolean chatJoin(Model model, @RequestBody Member member){
-        System.out.println("member.isChat_mentee() = " + member.isChat_mentee());
+    public String chatJoin(Model model, @RequestBody Member member){
+        System.out.println("ChatController.chatJoin");
         Member m = chatService.joinChatRoom(member);
 
         model.addAttribute("chatJoin", m);
 
-        return true;
+        return "chat/memberJoinChat";
     }
 
     // 5. 멘티 취소 요청
     // 없는 user, chat이면 false 반환
     @GetMapping("chat/out")
     public boolean chatOut(@RequestParam User userNumber, @RequestParam Chat chatNumber){
+        System.out.println("ChatController.chatOut");
         boolean b = chatService.outChatRoom(userNumber, chatNumber);
 
         return b;
@@ -84,8 +85,8 @@ public class ChatController {
 
     // 7. 채팅방 참가자 리스트 조회
     @GetMapping("chat/room/list")
-    public List<String> chatRoomList(Model model, @RequestParam Chat chatNumber) {
-        List<String> userList = chatService.memberList(chatNumber);
+    public List<Member> chatRoomList(Model model, @RequestParam Chat chatNumber) {
+        List<Member> userList = chatService.memberList(chatNumber);
 
         model.addAttribute("chatRoomList", userList);
         return userList;
@@ -93,8 +94,8 @@ public class ChatController {
 
     // 8. 멘토 추천 수 조회
     @GetMapping("chat/mentor")
-    public User chatMentor(Model model, @RequestParam Chat chatNumber){
-        User u = chatService.memtorRecom(chatNumber);
+    public User mentorRecom(Model model, @RequestParam Chat chatNumber){
+        User u = chatService.mentorRecom(chatNumber);
 
         return u;
     }

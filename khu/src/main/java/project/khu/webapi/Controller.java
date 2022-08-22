@@ -123,7 +123,7 @@ public class Controller {
         Member m = new Member();
         m.setUser_number(user_number);
         m.setChat_number(chat_number);
-        m.setChat_mentee(chat_mentee);
+        m.setMentor_check(chat_mentee);
         memberRepository.save(m);
 
         return "Save Chat member join";

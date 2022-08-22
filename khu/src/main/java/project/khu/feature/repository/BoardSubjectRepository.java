@@ -9,8 +9,12 @@ import project.khu.feature.model.BoardSubject;
 import project.khu.feature.model.BoardSubjectId;
 import project.khu.feature.model.SubjectInfo;
 
+import java.util.List;
+
 @Repository
 public interface BoardSubjectRepository extends JpaRepository<BoardSubject, BoardSubjectId> {
+
+
     @Query("select b from BoardSubject b where b.subject_number = ?1")
-    Board findAllBySubject_number(SubjectInfo subjectNumber);
+    List<Board> findAllBySubject_number(SubjectInfo subject_number);
 }

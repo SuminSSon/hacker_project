@@ -31,9 +31,11 @@ public interface ChatService {
     public List<ChatContent> chatRoom(Chat chat_number);
 
     // 7. 채팅방 참가자 리스트 조회
-    public List<String> memberList(Chat chat_number);
+    public List<Member> memberList(Chat chat_number);
 
     // 8. 멘토 추천 수 조회
-    public User memtorRecom(Chat chat_number);
+    public User mentorRecom(Chat chat_number);
 
+    // 8. 멘토 추천 수 조회
+    User memtorRecom(Chat chat_number);
 }

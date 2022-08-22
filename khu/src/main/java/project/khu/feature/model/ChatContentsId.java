@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ChatContentsId implements Serializable {
 
     private Integer chat_send_time;
-    private Integer user_number;
+    private User user_number;
 
     @Override
     public boolean equals(Object o) {
