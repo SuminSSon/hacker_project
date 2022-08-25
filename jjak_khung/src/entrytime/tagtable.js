@@ -83,7 +83,6 @@ function TagTable(props) {
         }
     };
     
-    let index = 0;
     return(
         <View style={styles.tagTableWrap}>
             {appealTags.map((tags, index) => (
@@ -107,24 +106,24 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     pressedTagButton: {
-        width: 65,
-        height: 30,
+        width: 61,
+        height: 32,
         margin: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        borderColor: '#6667AB',
-        backgroundColor: '#6667AB'
+        borderRadius: 7,
+        borderColor: 'rgba(113, 115, 201, 0.8);',
+        backgroundColor: 'rgba(113, 115, 201, 0.8);'
     },
     unpressedTagButton: {
-        width: 65,
-        height: 30,
+        width: 61,
+        height: 32,
         margin: 10,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        borderColor: '#AAABEF',
-        backgroundColor: '#AAABEF'
+        borderRadius: 7,
+        borderColor: 'rgba(113, 115, 201, 0.3)',
+        backgroundColor: 'rgba(113, 115, 201, 0.3)'
     }
 });
 

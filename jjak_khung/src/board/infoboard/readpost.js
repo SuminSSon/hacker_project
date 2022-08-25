@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, Text, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 function ReadPost (props) {
     const route = useRoute();
+    const serverUrl = props.serverUrl;
     const post = route.params.post;
     const date = post.board_date.replace('T', ' ');
+    const [, updateState] = useState();
+    const forceUpdate = useCallback(() => updateState({}),[]);
+    const [comments, setComments] = useState([]);
+    const [apiCallDone, setApiCallDone] = useState(false);
     const userInfo = props.userInfo;
 
     let comment = '';
@@ -14,13 +19,38 @@ function ReadPost (props) {
         comment = text
     )};
 
+    useEffect(() => {
+        const getBoardInfoCommentList = async () => {
+            try {
+                const callUrl = serverUrl + 'board/info/comment/list?boardNumber=' + post.board_number;
+                const getBoardInfoCommentListResponse = await fetch(callUrl);
+                const getBoardInfoCommentListJson = await getBoardInfoCommentListResponse.json();
+                let tempList = [];
+                for (const comment of getBoardInfoCommentListJson) {
+                    const temp = {
+                        comment_content: comment.comments_content, 
+                        comment_date: comment.comments_date,
+                        comment_number: comment.comments_number,
+                        comment_writer: comment.user_number.user_name};
+                        tempList.push(temp);
+                }
+                setComments(tempList);
+                setApiCallDone(true);
+            } catch(e) {
+                console.log(e);
+            }
+        }
+        if (!apiCallDone) {
+            getBoardInfoCommentList();
+        }
+    });
 
     function PostInfo() {
         return(
             <View style={styles.postInfoWrap}>
                 <View style={styles.postWriterandDateWrap}>
-                    <Text style={{fontSize: 20}}>작성자 : {post.user_name}</Text>
-                    <Text style={{fontSize: 20}}>{date}</Text>
+                    <Text style={{fontSize: 18, fontWeight: '500', color:'#3E3F42'}}>작성자 : {post.user_number.user_name}</Text>
+                    <Text style={{fontSize: 14, fontWeight: '500', color:'#3E3F42'}}>{date}</Text>
                 </View>
             </View>
         );
@@ -29,8 +59,8 @@ function ReadPost (props) {
     function PostContent() {
         return(
             <View style={styles.postContentWrap}>
-                <Text style={{fontSize: 30, marginVertical: 20}}>{post.board_title}</Text>
-                <Text style={{fontSize: 20, marginBottom: 20}}>{post.board_content}</Text>
+                <Text style={{fontSize: 20, marginBottom: 20}}>{post.board_title}</Text>
+                <Text style={{fontSize: 14, marginBottom: 20}}>{post.board_content}</Text>
             </View>
         );
     };
@@ -38,14 +68,12 @@ function ReadPost (props) {
     function PostComment() {
         return(
             <View style={styles.postCommentWrap}>
-                <Text style={{fontSize: 25, marginBottom: 20}}>댓글</Text>
-                {post.comments.map((comment, index) => (
+                <Text style={{fontSize: 20, marginBottom: 20}}>댓글</Text>
+                {comments.map((comment, index) => (
                     <View key={index} style={styles.postComment}>
-                        <View style={styles.postCommentInfoWrap}>
-                            <Text style={{fontSize: 25}}>{comment.comments_writer}</Text>
-                            <Text style={{fontSize: 20}}> {comment.comments_date}</Text>
-                        </View>
-                        <Text style={{fontSize: 25, padding: 10}}>{comment.comments_contents}</Text>
+                        <Text style={{fontSize: 15, fontWeight: '500'}}>{comment.comment_writer}</Text>
+                        <Text style={{fontSize: 14, fontWeight: '400'}}>{comment.comment_content}</Text>
+                        <Text style={{fontSize: 10, color: '#9C9C9C'}}> {comment.comment_date}</Text>
                     </View>
                 ))}
             </View>
@@ -70,18 +98,37 @@ function ReadPost (props) {
         );
     };
 
-    function writeComment() {
-        Alert.alert(
-            '',
-            '내용 : ' + comment,
-            [
-                {
-                    text: '확인',
-                    style: 'cancel'
-                }
-            ]
-        );
+    const writeComment = async () => {
+        await postBoardInfoCommentWrite();
+        setApiCallDone(false);
+        forceUpdate();
     };
+
+    const postBoardInfoCommentWrite = async () => {
+        try {
+            const callUrl = serverUrl + 'board/info/comment/write';
+            const postBoardInfoCommentWriteResponse = await fetch(callUrl, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    board_number : {
+                        board_number : post.board_number
+                    },
+                    comments_content : comment,
+                    user_number : {
+                        user_number : userInfo.user_number
+                    }
+                })
+            });
+            return true;
+        } catch(e) {
+            console.log(e);
+            return false;
+        }
+    }
 
     return(
         <View style={styles.postReadWrap}>
@@ -97,60 +144,66 @@ function ReadPost (props) {
 
 const styles = StyleSheet.create({
     postReadWrap: {
+        width:'100%',
         height: '100%',
-        padding: 20,
-        justifyContent: 'space-between'
+        backgroundColor:'#F8F9FF'
     },
     postInfoWrap: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 10
+        height:'10%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        marginTop: '10%',
+        justifyContent: 'space-between'
     },
     postWriterandDateWrap: {
         justifyContent: 'center'
     },
-    postProfNameWrap: {
-        justifyContent: 'center'
-    },
     postContentWrap: {
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        borderBottomColor: '#8398D1',
+        margin:'5%'
     },
     postCommentWrap: {
-        marginTop: 20
+        paddingHorizontal:'5%',
     },
     postComment: {
-        backgroundColor: '#cecece'
+        backgroundColor: '#F8F9FF',
+        borderBottomWidth:1,
+        borderBottomColor: '#D4D4D4',
+        padding: '3%'
     },
     postCommentInfoWrap: {
         display: 'flex',
         flexDirection: 'row',
+        justifyContent:'space-between',
         padding: 10,
-        paddingBottom: 0
     },
     writeCommentWrap: {
+        width:'90%',
+        height: 45,
+        margin: '5%',
+        marginBottom: '10%',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: 60
+        borderRadius: 6,
+        borderWidth: 0.7
     },
     commentInputWrap: {
-        width: 300,
+        width:'85%',
         height: 45,
-        borderWidth: 1,
-        borderRadius: 5,
         paddingHorizontal: 10,
         justifyContent: 'center'
     },
     commentInput: {
     },
     writeCommentButton: {
-        width: 45,
+        width: '15%',
         height: 45,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#6667AB',
+        backgroundColor: '#7173C9',
         borderRadius: 5
     }
 });

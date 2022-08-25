@@ -1,17 +1,40 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 function SubjectBoardList (props) {
     const navigation = useNavigation();
     const subjectList = props.subjectList;
+    const semTime = props.semTime;
+    const [subjectNameList, setSubjectNameList] = useState([]);
+
+    function makeSubjectNameList() {
+        const tempSubjectList = [];
+        for (const subject of subjectList){
+            var dupplicated = false;
+            for (const item of tempSubjectList){
+                if (item === subject.subject_name){
+                    dupplicated = true;
+                    break;
+                }
+            }
+            if (dupplicated === false){
+                tempSubjectList.push(subject.subject_name);
+            }
+        }
+        setSubjectNameList(tempSubjectList);
+    };
+
+    useEffect(() => {
+        makeSubjectNameList();
+    }, [])
 
     function Header() {
         return(
             <View style={styles.headerWrap}>
                 <View style={styles.headerContentWrap}>
                     <TouchableOpacity style={styles.subjectBoardButton}>
-                        <Text style={{fontSize: 25}}>{'\n'}과목 게시판</Text>
+                        <Text style={{fontSize: 24,color:'#FFFFFF'}}>{'\n'}과목 게시판</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.infoBoardButton}
                         onPress={() => {
@@ -21,7 +44,7 @@ function SubjectBoardList (props) {
                                 }]
                             })
                         }}>
-                        <Text style={{fontSize: 25}}>{'\n'}정보 게시판</Text>
+                        <Text style={{fontSize: 24,color:'#FFFFFF'}}>{'\n'}정보 게시판</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -34,18 +57,26 @@ function SubjectBoardList (props) {
                 <View style={styles.footerButtonWrap}>
                     <TouchableOpacity style={styles.chatlistButton}
                         onPress={() => {
-                            navigation.reset({
-                                routes: [{
-                                    name: 'entrytime'
-                                }]
-                            });
+                            if (semTime === 'entrytime') {
+                                navigation.reset({
+                                    routes: [{
+                                        name: 'entrytime'
+                                    }]
+                                });
+                            } else if (semTime === 'termtime') {
+                                navigation.reset({
+                                    routes: [{
+                                        name: 'termtime'
+                                    }]
+                                });
+                            }
                         }}>
-                        <Text style={{fontSize: 30}}>채팅</Text>
+                        <Text style={{fontSize: 20}}>💬</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.footerButtonWrap}>
                     <TouchableOpacity style={styles.boardButton}>
-                        <Text style={{fontSize: 30}}>게시판</Text>
+                        <Text style={{fontSize: 20}}>📌</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -55,13 +86,13 @@ function SubjectBoardList (props) {
     function SubjectBoardList() {
         return(
             <ScrollView style={styles.subjectBoardList}>
-                {subjectList.map((subject, i) => (
+                {subjectNameList.map((subject, i) => (
                     <TouchableOpacity key={i} style={styles.subjectBoard}
                         onPress={() => {
                             props.setSubject(subject)
                             navigation.navigate('postlist');
                         }}>
-                        <Text style={{fontSize: 25, padding: 20}}>{subject}</Text>
+                        <Text style={{fontSize: 18, padding: 10}}>{subject}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
@@ -79,14 +110,17 @@ function SubjectBoardList (props) {
 
 const styles = StyleSheet.create({
     subjectBoardListWrap: {
+        width: '100%',
         height: '100%',
+        backgroundColor:'#F8F9FF',
+        display: 'flex',
         justifyContent: 'space-between'
     },
     headerWrap: {
         width: '100%',
-        height: 100,
-        backgroundColor: '#6667AB',
-        justifyContent: 'center'
+        height: '11.6%',
+        justifyContent: 'center',
+        backgroundColor: '#7173C9'
     },
     headerContentWrap: {
         display: 'flex',
@@ -97,7 +131,7 @@ const styles = StyleSheet.create({
         width: '50%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#55569A'
+        backgroundColor: '#6667AB',
     },
     infoBoardButton: {
         width: '50%',
@@ -105,21 +139,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     subjectBoardList: {
-        margin: 20
+        width:'100%',
+        height:'100%',
+        paddingLeft: '7%',
+        paddingRight: '7%',
+        paddingTop: '10%',
     },
     subjectBoard: {
-        height: 80,
-        marginVertical: 10,
         justifyContent: 'center',
-        backgroundColor: '#cecece',
-        borderRadius: 10
+        height:48,
+        borderBottomWidth: 1,
+        borderColor: '#8398D1'
     },
     footerWrap: {
         display: 'flex',
         flexDirection: 'row',
-        width: '100%',
-        height: 100,
-        backgroundColor: '#6667AB'
+        width:'100%',
+        height: '9%',
+        backgroundColor: '#7173C9'
     },
     footerButtonWrap: {
         width: '50%',
@@ -132,13 +169,13 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#6667AB'
     },
     boardButton: {
         width: '100%',
         height: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#55569A'
+        justifyContent: 'center'
     }
 });
 

@@ -1,115 +1,160 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState, useEffect, useCallback } from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, Image } from 'react-native';
-import logo from '../../assets/images/khu-logo.jpeg'
+import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, Image, Alert } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import logo from '../../assets/images/khu-logo-01.png'
 
 function Emailverification(props) {
     const navigation = useNavigation();
-
+    const serverUrl = props.serverUrl;
+    const [verificationNumFailText, setVerificationNumFailText] = useState('');
+    const [emailSent, setEmailSent] = useState(false);
+    const [validationKey, setValidationKey] = useState('');
     let userEmail = '';
+    let validKey = '';
+    let validationNum = '';
 
     function setUserEmail(email) {(
         userEmail = email
     )};
+
+    function setValidationNum(num) {(
+        validationNum = num
+    )}
+
+    const getAuthMailApi = async () => {
+        try {
+            if (!userEmail.includes('@khu.ac.kr')){
+                throw new Error('not khu email domain');
+            }
+            const callUrl = serverUrl + 'authmail?email=' + userEmail;
+            const authmailReaponse = await fetch(callUrl);
+            if (!authmailReaponse.ok) {
+                throw new Error('400 or 500 error occurred');
+            }
+            const authmailJson = await authmailReaponse.json();
+            validKey = authmailJson;
+        } catch(e) {
+            console.log(e);
+            Alert.alert(
+                '경고',
+                '유효한 경희대 메일 주소를 입력해주세요!',
+                [
+                    {
+                        text: '확인',
+                        style: 'cancel'
+                    }
+                ]
+            )
+        }
+    };
 
     const EmailBox = () => {
         return (
             <TextInput
                 onChangeText={(text) => setUserEmail(text)}
                 style={styles.emailBox}
-                placeholder='kyeonghee@khu.ac.kr'
-                placeholderTextColor={'#555555'}
-                autoCapitalize={'none'}
-            />
+                placeholder='경희대학교 메일을 입력해주세요'
+                placeholderTextColor={'#B6C2D2'}
+                autoCapitalize={'none'}/>
             );
         };
-
-    const EmailFailText= ()=> {
-        const SuccessText='유효한 이메일 입니다';
-        const FailText ='유효한 경희대 메일 주소를 입력해 주세요';
-        const khuEmail ='khu.ac.kr';
-        return(
-            <Text>{props.userEmail}</Text>
-        );
-        if(props.userEmail.includes(khuEmail)){
-            return (
-                <View style={styles.emailFailText}>
-                    <Text style={{ fontSize: 15, color: 'green' }}>{SuccessText}</Text>
-                </View>
-            );
-        }
-        else if (props.userEmail !== ''){
-            return(
-                <View style={styles.emailFailText}>
-                    <Text style={{ fontSize: 15, color: '#6667AB' }}>{FailText}</Text>            
-                </View>
-            );
-        } else {
-            return(
-                <Text style={{ fontSize: 15, color: '#6667AB' }}/>
-            );
-        }
-    };
 
     const EmailRequireButton = () => {
         return (
             <TouchableOpacity
                 style={styles.requirebutton}
                 onPress={() => {
-                    alert('인증번호가 발송되었습니다.');
-                    props.setUserEmail(userEmail);
-                }}
-            >
-                <Text style={{ fontSize: 15, color: "white" }}>인증번호 요청</Text>
+                    eamilRequire();
+                }}>
+                <Text style={{ fontSize: 14, color: "#ffffff" }}>인증번호 요청</Text>
             </TouchableOpacity>
         );
+    };
+
+    const eamilRequire = async () => {
+        await getAuthMailApi();
+        console.log(validKey);
+        if (validKey) {
+            alert("인증번호가 전달되었습니다!");
+            props.setUserEmail(userEmail);
+            setEmailSent(true);
+            setValidationKey(validKey);
+        }
     };
 
     const VerificationNum = () => {
         return (
             <TextInput
+                onChangeText={(text) => setValidationNum(text)}
                 style={styles.verificationNum}
                 placeholder='인증번호'
-                placeholderTextColor={'#555555'}
+                placeholderTextColor='#B6C2D2'
+                autoCapitalize='none'
             />
         );
     };
     const VerificationNumFailText = () => {
         return (
             <View>
-                <Text style={{ fontSize: 15, color: 'red', marginLeft: 8 }}>
-                    인증번호가 일치하지 않습니다.
+                <Text style={styles.verificationNumfailText}>
+                    {verificationNumFailText}
                 </Text>
             </View>
         );
     };
 
     const VerificationButton = () => {
-        return (
-            <TouchableOpacity 
-                style={styles.verificationButton}
-                onPress={()=> navigation.navigate('userinfo')}
-                >
-                    <Text style={{ marginTop: 10, fontSize: 20, color: 'white' }}>인증하기</Text>
-            </TouchableOpacity>
-        );
+        if (emailSent) {
+            return (
+                <TouchableOpacity 
+                    style={styles.verificationButton}
+                    onPress={()=> verificaiton()}>
+                        <Text style={{fontSize:14, color:'#FFFFFF'}}>회원가입 계속하기</Text>
+                </TouchableOpacity>
+            );
+        } else {
+            return (
+                <TouchableOpacity 
+                    style={styles.unsentVerificationButton}
+                    disabled={true}
+                    onPress={()=> verificaiton()}>
+                        <Text style={{fontSize:14, color:'#FFFFFF'}}>회원가입 계속하기</Text>
+                </TouchableOpacity>
+            );
+        }
     };
+
+    function verificaiton() {
+        if (validationNum.toString() === validationKey.toString()) {
+            navigation.navigate('userinfo');
+        } else {
+            Alert.alert(
+                '에러',
+                '인증번호가 틀렸습니다.',
+                [
+                    {
+                        text: '확인',
+                        style: 'cancel'
+                    }
+                ]
+            )
+            setVerificationNumFailText('인증번호가 일치하지 않습니다.');
+        }
+    }
         
     return (
         <View style={styles.emailverficationWrap}>
             <Image
                 source={logo}
                 resizeMode={'contain'}
-                style={{ marginTop: 50 }}
+                style={{ marginTop:'35%',marginLeft:'23%' }}
             />
-            <Text style={{ fontSize: 20, marginTop: 20 }}>경희대 메일 인증</Text>
-            <View style={{ display: 'flex', marginTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={{ fontSize: 16, marginTop: '8%', marginLeft:'33%' }}>경희대 메일 인증</Text>
+            <View style={styles.emailBoxWrap}>
                 <EmailBox />
                 <EmailRequireButton />
-            </View>
-            <View>
-                <EmailFailText/>
             </View>
             <View>
                 <VerificationNum />
@@ -122,59 +167,80 @@ function Emailverification(props) {
 
 const styles = StyleSheet.create({
     emailverficationWrap: {
-        alignItems: 'center',
-        padding: 20,
-        marginTop: 10,
+        flex:1,
+        width:'100%',
+        height:'100%',
+        backgroundColor:'#F8F9FF'
+    },
+    emailBoxWrap: {
+        width:'90%',
+        height:48,
+        marginTop:'10%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        flexDirection:'row',
+        justifyContent:'space-between',
     },
     emailBox: {
-        width: 260,
-        height: 45,
-        borderWidth: 1,
-        borderRadius: 5,
-        fontSize: 18,
-        paddingLeft: 10,
+        width: '70%',
+        height: '100%',//48
+        paddingLeft:14,
+        justifyContent: 'center',
+        borderWidth:1,
+        borderColor:'#E4E4E4',
+        borderRadius: 6,
+        backgroundColor:'#ffffff'
     },
     requirebutton: {
-        alignItems: 'center',
+        width: '27%',
+        height:'100%',//48
+        borderWidth:1,
+        borderColor:'#E4E4E4',
+        borderRadius: 6,
         justifyContent: 'center',
-        width: 90,
-        marginLeft: 8,
-        borderWidth: 2,
-        borderRadius: 5,
-        backgroundColor: '#555555',
-    },
-    emailFailText: {
-        width: 300,
-        marginTop: 8,
-        marginBottom: 10,
-        marginRight: 50,
+        alignItems: 'center',
+        backgroundColor: '#7173c9',
     },
     verificationNum: {
-        flexDirection: 'row',
-        width: 360,
-        height: 45,
-        paddingLeft: 10,
-        marginTop: 10,
-        marginBottom: 10,
-        borderWidth: 1,
-        borderRadius: 5,
-        fontSize: 18,
+        width: '90%',
+        height: 48,
+        marginTop: 23,
+        marginLeft:'5%',
+        marginRight:'5%',  
+        paddingLeft:14,
+        justifyContent: 'center',
+        borderWidth:1,
+        borderColor:'#E4E4E4',
+        borderRadius: 6,
+        backgroundColor:'#ffffff',
     },
     verificationNumfailText: {
-        width: 300,
-        marginLeft: 50,
-        marginTop: 20,
-        marginBottom: 10,
+        marginLeft: '6%',
+        marginTop: '3%',
+        fontSize:14,
+        color:'#BC0000'
     },
     verificationButton: {
+        width:'90%',
+        height:46,
+        marginTop:'8%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        borderRadius:6,
         alignItems: 'center',
-        width: 120,
-        height: 45,
-        marginTop: 30,
-        marginLeft: 125,
-        borderWidth: 2,
-        borderRadius: 5,
-        backgroundColor: '#555555'
+        justifyContent:'center',
+        backgroundColor: '#7173C9'
+    },
+    unsentVerificationButton: {
+        width:'90%',
+        height:46,
+        marginTop:'8%',
+        marginLeft:'5%',
+        marginRight:'5%',
+        borderRadius:6,
+        alignItems: 'center',
+        justifyContent:'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.1)'
     },
 });
 

@@ -7,53 +7,37 @@ const Stack = createNativeStackNavigator();
 
 function SearchBar (props) {
     return (
-        <View style={styles.searchWrap}>
-            <View style={styles.searchButtonWrap}>
-                <TouchableOpacity
-                    style={styles.searchButton}
-                    onPress={() => {props.navigation.navigate('searchchatlistbysubject')}}>
-                        <Text style={{fontSize: 20}}>검색</Text>
-                    </TouchableOpacity>
-            </View>
-            <View style={styles.searchInputWrap}>
-                <TouchableOpacity
-                    style={styles.searchInput}
-                    onPress={() => {
-                        props.navigation.navigate('searchchatlistbysubject');}}>
-                        <Text style={{fontSize: 20, color: '#cecece'}}>과목 검색...</Text>
-                    </TouchableOpacity>
-            </View>
+        <View style={styles.searchButtonWrap}>
+            <TouchableOpacity
+                style={styles.searchButton}
+                onPress={() => {props.navigation.navigate('searchchatlistbysubject')}}>
+                    <Text style={{fontSize: 18, color:'#3E3F42', marginLeft: 10}}>과목선택하러 가기</Text>
+                    <Text style={{fontSize: 18, color: '#3E3F42', marginRight: 10}}>⇨</Text>
+                </TouchableOpacity>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    searchWrap: {
-        display: 'flex',
-        flexDirection: 'row',
-        height: 50
-    },
     searchButtonWrap: {
-        width: 50,
-        borderWidth: 1,
-        borderRadius: 2
+        width:'100%',
+        height: 39,
+        paddingHorizontal: '7%',
+        display: 'flex',
+        alignItems:'center',
+        justifyContent:'center'
     },
     searchButton: {
-        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '90%',
         height: '100%',
-        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#cecece'
-    },
-    searchInputWrap: {
-        width: 300,
         borderWidth: 1,
-        borderRadius: 2
-    },
-    searchInput: {
-        width: '100%',
-        padding: 10,
-        justifyContent: 'center',
+        borderColor: '#E4E4E4',
+        borderRadius: 6,
+        backgroundColor:'#ffffff',
     }
 });
 

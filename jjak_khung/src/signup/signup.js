@@ -7,16 +7,17 @@ import Userinfo from './userinfo';
 
 const Stack = createNativeStackNavigator();
 
-function Signup(){
+function Signup(props){
+    const serverUrl = props.serverUrl;
     const [userEmail, setUserEmail] = useState('');
 
     return(
         <Stack.Navigator>
             <Stack.Screen name='emailverification' options={{headerShown: false}}>
-                {props => <Emailverification userEmail={userEmail} setUserEmail={setUserEmail}/>}
+                {props => <Emailverification serverUrl={serverUrl} userEmail={userEmail} setUserEmail={setUserEmail}/>}
             </Stack.Screen>
             <Stack.Screen name='userinfo' options={{headerShown: false}}>
-                {props => <Userinfo  />}
+                {props => <Userinfo serverUrl={serverUrl} userEmail={userEmail}/>}
             </Stack.Screen>
         </Stack.Navigator>
     );  

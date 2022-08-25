@@ -9,18 +9,20 @@ import WritePost from './writepost';
 const Stack = createNativeStackNavigator();
 
 function InfoBoard(props) {
+    const semTime = props.semTime;
+    const serverUrl = props.serverUrl;
     const userInfo = props.userInfo;
 
     return (
         <Stack.Navigator>
             <Stack.Screen name='postlist' options={{ headerShown: false }}>
-                {props => <Postlist userInfo={userInfo}/>}
+                {props => <Postlist semTime={semTime} serverUrl={serverUrl} userInfo={userInfo}/>}
             </Stack.Screen>
             <Stack.Screen name='readpost' options={{ headerTitle: "자료게시판", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: { backgroundColor: '#6667AB' } }}>
-                {props => <ReadPost userInfo={userInfo}/>}
+                {props => <ReadPost semTime={semTime} serverUrl={serverUrl} userInfo={userInfo}/>}
             </Stack.Screen>
             <Stack.Screen name='writepost' options={{ headerTitle: "글 쓰기", headerBackTitle: "뒤로", headerTintColor: '#ffffff', headerStyle: { backgroundColor: '#6667AB' } }}>
-                {props => <WritePost userInfo={userInfo}/>}
+                {props => <WritePost serverUrl={serverUrl} userInfo={userInfo}/>}
             </Stack.Screen>
         </Stack.Navigator>
     );
