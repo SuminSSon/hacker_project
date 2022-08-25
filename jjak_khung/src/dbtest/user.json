@@ -1,0 +1,42 @@
+[
+    {
+        "user_number": 1,
+        "user_id": "aaa",
+        "user_password": "aaa",
+        "user_name": "고혜연",
+        "user_point": 100,
+        "user_recom": 10
+    },
+    {
+        "user_number": 2,
+        "user_id": "bbb",
+        "user_password": "bbb",
+        "user_name": "김형준",
+        "user_point": 100,
+        "user_recom": 10
+    },
+    {
+        "user_number": 3,
+        "user_id": "ccc",
+        "user_password": "ccc",
+        "user_name": "손수민",
+        "user_point": 100,
+        "user_recom": 10
+    },
+    {
+        "user_number": 4,
+        "user_id": "ddd",
+        "user_password": "ddd",
+        "user_name": "윤성아",
+        "user_point": 100,
+        "user_recom": 10
+    },
+    {
+        "user_number": 5,
+        "user_id": "eee",
+        "user_password": "eee",
+        "user_name": "정지안",
+        "user_point": 100,
+        "user_recom": 10
+    }
+]

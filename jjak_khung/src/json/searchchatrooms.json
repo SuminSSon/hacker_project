@@ -1,0 +1,25 @@
+{
+    "chatrooms" : [
+        {
+            "user_name": "홍길동",
+            "user_recom": 12,
+            "user_tag": "친절,유쾌",
+            "chat_max": 8,
+            "chat_mentee": 3
+        },
+        {
+            "user_name": "김경희",
+            "user_recom": 8,
+            "user_tag": "열정",
+            "chat_max": 4,
+            "chat_mentee": 4
+        },
+        {
+            "user_name": "김철수",
+            "user_recom": 14,
+            "user_tag": "상냥",
+            "chat_max": 5,
+            "chat_mentee": 2
+        }
+    ]
+}
